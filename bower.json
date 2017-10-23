@@ -1,0 +1,22 @@
+{
+  "name": "aplicacao-estrutura-de-dados",
+  "homepage": "https://github.com/mucioferreira/desafio-estrutura-aplicacao",
+  "authors": [
+    "Mucio Ferreira <mucio.ferreira@outlook.com>"
+  ],
+  "description": "Aplicação para o desafio de Estrutura de Dados / 2º Semestre-2017",
+  "main": "index.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "components-font-awesome": "^4.7.0"
+  }
+}
