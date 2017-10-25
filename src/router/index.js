@@ -1,17 +1,39 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import VueBreadcrumbs from 'vue-2-breadcrumbs'
+
 import Inicio from '@/components/Inicio'
+
 import Usuario from '@/components/usuario/Usuario'
 import UsuarioNovo from '@/components/usuario/UsuarioNovo'
-import UsuarioPesquisar from '@/components/usuario/UsuarioPesquisar'
 import UsuarioTodos from '@/components/usuario/UsuarioTodos'
 
-Vue.use(Router)
-Vue.use(VueBreadcrumbs)
+import VueNotifications from 'vue-notifications'
+import miniToastr from 'mini-toastr'// https://github.com/se-panfilov/mini-toastr
 
-const Foo = {template: '<div><h2>foo<h2></div>'}
-const Bar = {template: '<div><h2>Bar</h2></div>'}
+Vue.use(Router)
+
+VueNotifications.config.timeout = 4000
+
+const toastTypes = {
+  success: 'success',
+  error: 'error',
+  info: 'info',
+  warn: 'warn'
+}
+miniToastr.init({types: toastTypes})
+
+function toast ({title, message, type, timeout, cb}) {
+  return miniToastr[type](message, title, timeout, cb)
+}
+
+const options = {
+  success: toast,
+  error: toast,
+  info: toast,
+  warn: toast
+}
+
+Vue.use(VueNotifications, options)
 
 export default new Router({
   routes: [
@@ -36,35 +58,18 @@ export default new Router({
                 breadcrumb: 'Novo'
               }
             },
-            {
-              path: '/usuario/:id',
-              component: UsuarioPesquisar,
-              meta: {
-                breadcrumb: 'Pesquisar'
-              }
-            },
+            // {
+            //   path: '/usuario/:id',
+            //   component: UsuarioPesquisar,
+            //   meta: {
+            //     breadcrumb: 'Pesquisar'
+            //   }
+            // },
             {
               path: '',
-              component: UsuarioTodos,
-              meta: {
-                breadcrumb: 'Todos'
-              }
+              component: UsuarioTodos
             }
           ]
-        },
-        {
-          path: 'foo',
-          component: Foo,
-          meta: {
-            breadcrumb: 'foo'
-          }
-        },
-        {
-          path: 'bar',
-          component: Bar,
-          meta: {
-            breadcrumb: 'bar'
-          }
         }
       ]
     }
