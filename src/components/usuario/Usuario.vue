@@ -1,5 +1,3 @@
 <template>
-  <section>
-    Usuario
-  </section>
+	<router-view/>
 </template>

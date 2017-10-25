@@ -17,8 +17,8 @@
 	                <li class="submenu">
 	                    <a href="#"><i class="fa fa-user"></i> <span>Usuário</span> <i class="i fa fa-caret-down"></i></a>
 	                    <ul>
-	                        <li><a href="#">Novo usuário</a></li>
-	                        <li><a href="#">Todos usuários</a></li>
+	                        <li><router-link to="/usuario/novo">Novo usuário</router-link></li>
+	                        <li><router-link to="/usuario/">Todos usuários</router-link></li>
 	                    </ul>
 	                </li>
 	                <li class="submenu"> <a href="#"><i class="fa fa-server"></i> <span>Servidor</span> <i class="i fa fa-caret-down"></i></a>
