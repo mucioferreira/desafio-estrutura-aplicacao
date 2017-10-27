@@ -36,8 +36,8 @@ export default {
       var t = this
       UsuarioService.post(t.nome).then(
         response => {
-          t.nome = ''
           VueNotifications.success({title: 'Sucesso!', message: response.body.data.nome + ' adicionado com sucesso!'})
+          t.$router.push('/usuario/' + response.body.data.id)
         },
         error => {
           error.data.errors.map(erro =>

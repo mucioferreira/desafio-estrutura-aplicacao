@@ -1,6 +1,6 @@
 <template>
   <aside>
-    <h1>Todos Usuário</h1>
+    <h1>Todos Usuários</h1>
     <hr>
     <div class="widget-box">
       <div class="widget-content nopadding">
@@ -17,9 +17,14 @@
               <td>{{ usuario.id }}</td>
               <td><router-link :to="`/usuario/${usuario.id}`">{{ usuario.nome }}</router-link></td>
               <td>
-                <router-link :to="`/usuario/modificar/${usuario.id}`" class="btn btn-primary">Modificar</router-link>
+                <router-link :to="`/usuario/${usuario.id}`" class="btn btn-info">
+                  <i class="fa fa-plus"></i>
+                </router-link>
+                <router-link :to="`/usuario/modificar/${usuario.id}`" class="btn btn-primary">
+                  <i class="fa fa-pencil"></i>
+                </router-link>
                 <button v-on:click="openExcluirUsuario(usuario)" class="btn btn-danger">
-                  Excluir
+                  <i class="fa fa-trash"></i>
                 </button>
               </td>
             </tr>

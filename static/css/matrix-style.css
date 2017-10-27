@@ -1576,3 +1576,12 @@ div.dataTables_wrapper .ui-widget-header {
 .no-margin {
 	margin: 0 !important;
 }
+
+.action-buttons {
+	float: right;
+	padding: 9px;
+}
+
+.action-buttons a {
+	padding: 0 5px;
+}
