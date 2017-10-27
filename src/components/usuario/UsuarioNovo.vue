@@ -13,6 +13,7 @@
           </div>
           <div class="form-actions">
             <button class="btn btn-success">Adicionar</button>
+            <router-link to="/usuario/" class="btn btn-primary">Voltar</router-link>
           </div>
         </form>
       </div>

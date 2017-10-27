@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import ConfiguracaoService from '@/components/service/configuracaoService'
 
-const url = ConfiguracaoService.uri + 'usuario'
+const url = ConfiguracaoService.uri + 'usuario/'
 
 export default {
   get: function () {

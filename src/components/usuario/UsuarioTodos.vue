@@ -15,11 +15,9 @@
           <tbody>
             <tr v-for="usuario in usuarios" class="grade">
               <td>{{ usuario.id }}</td>
-              <td>{{ usuario.nome }}</td>
+              <td><router-link :to="`/usuario/${usuario.id}`">{{ usuario.nome }}</router-link></td>
               <td>
-                <button  class="btn btn-primary">
-                  Modificar
-                </button>
+                <router-link :to="`/usuario/modificar/${usuario.id}`" class="btn btn-primary">Modificar</router-link>
                 <button v-on:click="openExcluirUsuario(usuario)" class="btn btn-danger">
                   Excluir
                 </button>
@@ -34,7 +32,7 @@
       </div>
     </div>
 
-    <modal classes="modal-box" height="auto" name="excluir">
+    <modal classes="modal-box" width="300" height="auto" name="excluir">
       <div class="modal-header">
         <h3 class="modal-title">Confirmar exclusão - {{ usuario.id }}</h3>
       </div>

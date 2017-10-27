@@ -1572,3 +1572,7 @@ div.dataTables_wrapper .ui-widget-header {
 .modal-box {
 	background-color: #f9f9f9;
 }
+
+.no-margin {
+	margin: 0 !important;
+}

@@ -5,6 +5,8 @@ import Inicio from '@/components/Inicio'
 
 import Usuario from '@/components/usuario/Usuario'
 import UsuarioNovo from '@/components/usuario/UsuarioNovo'
+import UsuarioModificar from '@/components/usuario/UsuarioModificar'
+import UsuarioInformacoes from '@/components/usuario/UsuarioInformacoes'
 import UsuarioTodos from '@/components/usuario/UsuarioTodos'
 
 Vue.use(Router)
@@ -32,13 +34,20 @@ export default new Router({
                 breadcrumb: 'Novo'
               }
             },
-            // {
-            //   path: '/usuario/:id',
-            //   component: UsuarioPesquisar,
-            //   meta: {
-            //     breadcrumb: 'Pesquisar'
-            //   }
-            // },
+            {
+              path: '/usuario/modificar/:id',
+              component: UsuarioModificar,
+              meta: {
+                breadcrumb: 'Modificar'
+              }
+            },
+            {
+              path: '/usuario/:id',
+              component: UsuarioInformacoes,
+              meta: {
+                breadcrumb: 'Informação'
+              }
+            },
             {
               path: '',
               component: UsuarioTodos
