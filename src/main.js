@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 import VueBreadcrumbs from 'vue-2-breadcrumbs'
+import VModal from 'vue-js-modal'
 
 import App from './App'
 import router from './router'
@@ -35,6 +36,7 @@ const options = {
 Vue.use(VueNotifications, options)
 Vue.use(VueResource)
 Vue.use(VueBreadcrumbs)
+Vue.use(VModal)
 
 /* eslint-disable no-new */
 new Vue({

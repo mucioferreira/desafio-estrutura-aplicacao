@@ -20,6 +20,6 @@ export default {
     return Vue.http.put(url, {id: usuario.id, nome: usuario.nome})
   },
   delete: function (usuario) {
-    return Vue.http.delete(url, {id: usuario.id, nome: usuario.nome})
+    return Vue.http.delete(url, {body: {id: usuario.id, nome: usuario.nome}})
   }
 }
