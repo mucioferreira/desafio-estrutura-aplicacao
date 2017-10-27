@@ -4,7 +4,7 @@
     <hr>
     <div class="widget-box">
       <div class="widget-content">
-        <form v-on:submit="search" class="form-horizontal" name="basic_validate" id="basic_validate" novalidate="novalidate">
+        <form v-on:submit="adicionarUsuario" class="form-horizontal" name="basic_validate" id="basic_validate" novalidate="novalidate">
           <div class="control-group">
             <label for="nome" class="control-label">Nome: </label>
             <div class="controls">
@@ -21,35 +21,30 @@
 </template>
 
 <script>
+import UsuarioService from '@/components/service/usuarioService'
+import VueNotifications from 'vue-notifications'
+
 export default {
   data: function () {
     return {
-      nome: '',
-      response: null
+      nome: ''
     }
   },
   methods: {
-    search: function (miniToastr) {
+    adicionarUsuario: function () {
       var t = this
-      this.$http.post('http://localhost:8090/api/usuario', {nome: this.nome}).then(
+      UsuarioService.post(t.nome).then(
         response => {
           t.nome = ''
-          t.sucesso({title: 'Sucesso!', message: response.body.data.nome + ' adicionado com sucesso!'})
+          VueNotifications.success({title: 'Sucesso!', message: response.body.data.nome + ' adicionado com sucesso!'})
         },
         error => {
           error.data.errors.map(erro =>
-            t.erro({title: 'Erro!', message: erro})
+            VueNotifications.error({title: 'Erro!', message: erro})
           )
-        })
+        }
+      )
       event.preventDefault()
-    }
-  },
-  notifications: {
-    sucesso: {
-      type: 'success'
-    },
-    erro: {
-      type: 'error'
     }
   }
 }

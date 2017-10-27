@@ -8,7 +8,10 @@
     "dev": "node build/dev-server.js",
     "start": "npm run dev",
     "build": "node build/build.js",
-    "lint": "eslint --ext .js,.vue src"
+    "lint": "eslint --ext .js,.vue src",
+    "postinstall": "bower install",
+    "update-deps": "npm update",
+    "postupdate-deps": "bower update"
   },
   "dependencies": {
     "mini-toastr": "^0.6.6",
