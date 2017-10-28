@@ -23,8 +23,8 @@
 	                </li>
 	                <li class="submenu"> <a href="#"><i class="fa fa-server"></i> <span>Servidor</span> <i class="i fa fa-caret-down"></i></a>
 	                    <ul>
-	                        <li><a href="#">Novo servidor</a></li>
-	                        <li><a href="#">Todos servidores</a></li>
+                          <li><router-link to="/servidor/novo">Novo servidor</router-link></li>
+                          <li><router-link to="/servidor/">Todos servidores</router-link></li>
 	                    </ul>
 	                </li>
 	                <li class="submenu"> <a href="#"><i class="fa fa-sitemap"></i> <span>Nó da Rede</span> <i class="i fa fa-caret-down"></i></a>

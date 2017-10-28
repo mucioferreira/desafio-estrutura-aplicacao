@@ -1,6 +1,5 @@
 <template>
   <aside>
-      
     <div v-if="encontrado"> 
       <h1>Informação do usuário</h1>
       <hr>
@@ -37,7 +36,7 @@
             <h5>Informação do(a) {{ usuario.nome }} na Rede</h5>
           </a>
         </div>
-        <div id="collapseTwo" class="collapse in">
+        <div id="collapseTwo" class="collapse">
           <div class="widget-content">
             <ul v-if="usuario.usuarioDaRede.length">
               <li v-for="rede in usuario.usuarioDaRede">{{rede}}</li>
@@ -56,36 +55,16 @@
 
 <script>
 import UsuarioService from '@/components/service/usuarioService'
-import VueNotifications from 'vue-notifications'
-import router from '@/router'
 
 export default {
   data: function () {
     return {
       encontrado: false,
-      nome: null,
       usuario: null
     }
   },
-  router,
-  methods: {
-    procurarUsuario: function (id) {
-      var t = this
-      UsuarioService.getId(id).then(
-        response => {
-          t.usuario = response.body.data
-          t.encontrado = true
-        },
-        error => {
-          error.data.errors.map(erro =>
-            VueNotifications.error({title: 'Erro!', message: erro})
-          )
-        }
-      )
-    }
-  },
   mounted: function () {
-    this.procurarUsuario(this.$route.params.id)
+    UsuarioService.procurarUsuario(this.$route.params.id, usuario => { this.usuario = usuario }, encontrado => { this.encontrado = encontrado })
   }
 }
 </script>

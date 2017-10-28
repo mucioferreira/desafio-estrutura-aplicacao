@@ -34,25 +34,10 @@ export default {
   data: function () {
     return {
       encontrado: false,
-      nome: null,
       usuario: null
     }
   },
   methods: {
-    procurarUsuario: function (id) {
-      var t = this
-      UsuarioService.getId(id).then(
-        response => {
-          t.usuario = response.body.data
-          t.encontrado = true
-        },
-        error => {
-          error.data.errors.map(erro =>
-            VueNotifications.error({title: 'Erro!', message: erro})
-          )
-        }
-      )
-    },
     modificarUsuario: function (usuario) {
       var t = this
       UsuarioService.put(usuario).then(
@@ -66,12 +51,11 @@ export default {
           )
         }
       )
-
       event.preventDefault()
     }
   },
   mounted: function () {
-    this.procurarUsuario(this.$route.params.id)
+    UsuarioService.procurarUsuario(this.$route.params.id, usuario => { this.usuario = usuario }, encontrado => { this.encontrado = encontrado })
   }
 }
 </script>

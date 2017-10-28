@@ -4,11 +4,11 @@
     <hr>
     <div class="widget-box">
       <div class="widget-content">
-        <form v-on:submit="adicionarUsuario" class="form-horizontal" name="basic_validate" id="basic_validate" novalidate="novalidate">
+        <form v-on:submit="adicionarUsuario(usuario)" class="form-horizontal" name="basic_validate" id="basic_validate" novalidate="novalidate">
           <div class="control-group">
             <label for="nome" class="control-label">Nome: </label>
             <div class="controls">
-              <input id="nome" type="text" name="nome" v-model="nome" minlength="4">
+              <input id="nome" type="text" name="nome" v-model="usuario.nome" minlength="4">
             </div>
           </div>
           <div class="form-actions">
@@ -28,13 +28,13 @@ import VueNotifications from 'vue-notifications'
 export default {
   data: function () {
     return {
-      nome: ''
+      usuario: {}
     }
   },
   methods: {
-    adicionarUsuario: function () {
+    adicionarUsuario: function (usuario) {
       var t = this
-      UsuarioService.post(t.nome).then(
+      UsuarioService.post(usuario.nome).then(
         response => {
           VueNotifications.success({title: 'Sucesso!', message: response.body.data.nome + ' adicionado com sucesso!'})
           t.$router.push('/usuario/' + response.body.data.id)

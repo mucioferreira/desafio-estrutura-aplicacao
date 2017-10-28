@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import ConfiguracaoService from '@/components/service/configuracaoService'
+import VueNotifications from 'vue-notifications'
 
 const url = ConfiguracaoService.uri + 'usuario/'
 
@@ -21,5 +22,18 @@ export default {
   },
   delete: function (usuario) {
     return Vue.http.delete(url, {body: {id: usuario.id, nome: usuario.nome}})
+  },
+  procurarUsuario: function (id, usuario, encontrado) {
+    this.getId(id).then(
+      response => {
+        usuario(response.body.data)
+        encontrado(true)
+      },
+      error => {
+        error.data.errors.map(erro =>
+          VueNotifications.error({title: 'Erro!', message: erro})
+        )
+      }
+    )
   }
 }

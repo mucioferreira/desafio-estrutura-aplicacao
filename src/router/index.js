@@ -9,6 +9,12 @@ import UsuarioModificar from '@/components/usuario/UsuarioModificar'
 import UsuarioInformacoes from '@/components/usuario/UsuarioInformacoes'
 import UsuarioTodos from '@/components/usuario/UsuarioTodos'
 
+import Servidor from '@/components/servidor/Servidor'
+import ServidorNovo from '@/components/servidor/ServidorNovo'
+import ServidorModificar from '@/components/servidor/ServidorModificar'
+import ServidorInformacoes from '@/components/servidor/ServidorInformacoes'
+import ServidorTodos from '@/components/servidor/ServidorTodos'
+
 Vue.use(Router)
 
 export default new Router({
@@ -51,6 +57,40 @@ export default new Router({
             {
               path: '',
               component: UsuarioTodos
+            }
+          ]
+        },
+        {
+          path: '/servidor/',
+          component: Servidor,
+          meta: {
+            breadcrumb: 'Servidor'
+          },
+          children: [
+            {
+              path: '/servidor/novo',
+              component: ServidorNovo,
+              meta: {
+                breadcrumb: 'Novo'
+              }
+            },
+            {
+              path: '/servidor/modificar/:id',
+              component: ServidorModificar,
+              meta: {
+                breadcrumb: 'Modificar'
+              }
+            },
+            {
+              path: '/servidor/:id',
+              component: ServidorInformacoes,
+              meta: {
+                breadcrumb: 'Informação'
+              }
+            },
+            {
+              path: '',
+              component: ServidorTodos
             }
           ]
         }
