@@ -23,7 +23,6 @@
 
 <script>
 import UsuarioService from '@/components/service/usuarioService'
-import VueNotifications from 'vue-notifications'
 
 export default {
   data: function () {
@@ -33,18 +32,7 @@ export default {
   },
   methods: {
     adicionarUsuario: function (usuario) {
-      var t = this
-      UsuarioService.post(usuario.nome).then(
-        response => {
-          VueNotifications.success({title: 'Sucesso!', message: response.body.data.nome + ' adicionado com sucesso!'})
-          t.$router.push('/usuario/' + response.body.data.id)
-        },
-        error => {
-          error.data.errors.map(erro =>
-            VueNotifications.error({title: 'Erro!', message: erro})
-          )
-        }
-      )
+      UsuarioService.post(usuario)
       event.preventDefault()
     }
   }

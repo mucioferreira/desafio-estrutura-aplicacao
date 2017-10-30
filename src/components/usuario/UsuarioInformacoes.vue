@@ -12,6 +12,7 @@
           
           <div class="action-buttons">
             <router-link :to="`/usuario/modificar/${usuario.id}`"><i class="fa fa-pencil"></i></router-link>
+            <a v-on:click="openExcluirServidor(servidor)"> <i class="fa fa-trash"></i> </a>
           </div>
         </div>
         <div id="collapseOne" class="collapse in">
@@ -38,10 +39,23 @@
         </div>
         <div id="collapseTwo" class="collapse">
           <div class="widget-content">
-            <ul v-if="usuario.usuarioDaRede.length">
-              <li v-for="rede in usuario.usuarioDaRede">{{rede}}</li>
-            </ul>
-            <p v-else>Nenhuma informação encontrada!</p>
+<!--             <table v-if="usuario.usuarioDaRede.length" class="table table-bordered table-invoice no-margin">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Descrição</th>
+                  <th>Servidor</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="rede in usuario.usuarioDaRede" class="grade">
+                  <td>{{ rede.id }}</td>
+                  <td>{{ rede.descricaoDaRede }}</td>
+                  <td><router-link :to="`/servidor/${rede.servidor.id}`">{{ rede.servidor.ip }}</router-link></td>
+                </tr>
+              </tbody>
+            </table>
+            <p v-else>Nenhuma informação encontrada!</p> -->
           </div>
         </div>
       </div>
@@ -50,6 +64,8 @@
       <h2>Nenhum usuário encontrado</h2>
     </div>
     <router-link to="/usuario/" class="btn btn-primary">Voltar</router-link>
+
+     <remover-servidor v-model="usuario" name="excluir"></remover-servidor>
   </aside>
 </template>
 
@@ -59,8 +75,14 @@ import UsuarioService from '@/components/service/usuarioService'
 export default {
   data: function () {
     return {
-      encontrado: false,
-      usuario: null
+      usuario: {},
+      encontrado: false
+    }
+  },
+  methods: {
+    openExcluirUsuario: function (usuario) {
+      this.usuario = usuario
+      this.$modal.show('excluir')
     }
   },
   mounted: function () {

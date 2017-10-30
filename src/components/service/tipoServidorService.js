@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import ConfiguracaoService from '@/components/service/configuracaoService'
-import VueNotifications from 'vue-notifications'
 
 const url = ConfiguracaoService.uri + 'tipo-servidor/'
 
@@ -11,9 +10,7 @@ export default {
         tipos(response.body.data)
       },
       error => {
-        error.data.errors.map(erro =>
-          VueNotifications.error({title: 'Erro!', message: erro})
-        )
+        ConfiguracaoService.mensagemErro(error)
       }
     )
   }

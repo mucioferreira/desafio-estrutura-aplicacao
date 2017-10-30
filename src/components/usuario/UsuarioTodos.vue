@@ -17,15 +17,9 @@
               <td>{{ usuario.id }}</td>
               <td><router-link :to="`/usuario/${usuario.id}`">{{ usuario.nome }}</router-link></td>
               <td>
-                <router-link :to="`/usuario/${usuario.id}`" class="btn btn-info">
+                <router-link :to="`/usuario/${usuario.id}`" class="btn btn-primary">
                   <i class="fa fa-plus"></i>
                 </router-link>
-                <router-link :to="`/usuario/modificar/${usuario.id}`" class="btn btn-primary">
-                  <i class="fa fa-pencil"></i>
-                </router-link>
-                <button v-on:click="openExcluirUsuario(usuario)" class="btn btn-danger">
-                  <i class="fa fa-trash"></i>
-                </button>
               </td>
             </tr>
           </tbody>
@@ -36,86 +30,36 @@
         </div>
       </div>
     </div>
-
-    <modal classes="modal-box" width="300" height="auto" name="excluir">
-      <div class="modal-header">
-        <h3 class="modal-title">Confirmar exclusão - {{ usuario.id }}</h3>
-      </div>
-      <div class="modal-body">
-        Tem certeza que deseja deletar o usuário: <strong>{{ usuario.nome }}</strong>?
-      </div>
-      <div class="modal-footer">
-        <button v-on:click="closeExcluirUsuario()" class="btn btn-primary">
-          Não
-        </button>
-        <button v-on:click="excluirUsuario(usuario)" class="btn">
-          Sim
-        </button>
-      </div>
-    </modal>
   </aside>
 </template>
 
 <script>
 import UsuarioService from '@/components/service/usuarioService'
-import VueNotifications from 'vue-notifications'
 
 export default {
   data: function () {
     return {
       usuario: {},
       usuarios: [],
-      pagina: 0,
-      totalPaginas: 0,
-      time: 0,
-      duration: 5000
+      pagina: null,
+      totalPaginas: 0
     }
   },
   methods: {
-    carregarUsuarios: function (pagina) {
-      var t = this
-      UsuarioService.getPagina(pagina).then(
-        response => {
-          t.usuarios = response.body.data.content
-          t.totalPaginas = response.body.data.totalPages
-        },
-        error => {
-          console.log('Erro: ' + error.status)
-          VueNotifications.error({title: 'Erro!', message: 'Nenhum usuario encontrado!'})
-        }
-      )
-    },
-    excluirUsuario: function () {
-      var t = this
-      UsuarioService.delete(t.usuario).then(
-        response => {
-          this.carregarUsuarios(t.pagina)
-          this.closeExcluirUsuario()
-          VueNotifications.success({title: 'Sucesso!', message: t.usuario.nome + ' excluido com sucesso!'})
-        },
-        error => {
-          error.data.errors.map(erro =>
-            VueNotifications.error({title: 'Erro!', message: erro})
-          )
-        }
-      )
-    },
     proximaPagina: function () {
-      if (this.pagina < (this.totalPaginas - 1)) this.carregarUsuarios((++this.pagina))
+      if (this.pagina < (this.totalPaginas - 1)) ++this.pagina
     },
     anteriorPagina: function () {
-      if (this.pagina > 0) this.carregarUsuarios((--this.pagina))
-    },
-    openExcluirUsuario: function (usuario) {
-      this.usuario = usuario
-      this.$modal.show('excluir')
-    },
-    closeExcluirUsuario: function () {
-      this.$modal.hide('excluir')
+      if (this.pagina > 0) --this.pagina
     }
   },
   mounted: function () {
-    this.carregarUsuarios(this.pagina)
+    this.pagina = 0
+  },
+  watch: {
+    pagina: function () {
+      UsuarioService.carregarUsuarios(this.pagina, usuarios => { this.usuarios = usuarios }, totalPaginas => { this.totalPaginas = totalPaginas })
+    }
   }
 }
 </script>

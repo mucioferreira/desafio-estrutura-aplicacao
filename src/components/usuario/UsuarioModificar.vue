@@ -14,7 +14,7 @@
             </div>
             <div class="form-actions">
               <button class="btn btn-success">Modificar</button>
-              <router-link to="/usuario/" class="btn btn-primary">Voltar</router-link>
+              <router-link :to="`/usuario/${usuario.id}`" class="btn btn-primary">Voltar</router-link>
             </div>
           </form>
         </div>
@@ -28,7 +28,6 @@
 
 <script>
 import UsuarioService from '@/components/service/usuarioService'
-import VueNotifications from 'vue-notifications'
 
 export default {
   data: function () {
@@ -39,18 +38,7 @@ export default {
   },
   methods: {
     modificarUsuario: function (usuario) {
-      var t = this
-      UsuarioService.put(usuario).then(
-        response => {
-          VueNotifications.success({title: 'Sucesso!', message: response.body.data.nome + ' modificado com sucesso!'})
-          t.$router.push('/usuario/' + response.body.data.id)
-        },
-        error => {
-          error.data.errors.map(erro =>
-            VueNotifications.error({title: 'Erro!', message: erro})
-          )
-        }
-      )
+      UsuarioService.put(usuario)
       event.preventDefault()
     }
   },

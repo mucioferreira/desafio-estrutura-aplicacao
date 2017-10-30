@@ -9,7 +9,7 @@
           <router-link to="/usuario/novo"><i class="fa fa-user"></i> Novo Usuario</router-link>
         </li>
         <li class="bg_lg "> 
-          <router-link to="/"><i class="fa fa-server"></i> Novo Servidor</router-link>
+          <router-link to="/servidor/novo"><i class="fa fa-server"></i> Novo Servidor</router-link>
         </li>
         <li class="bg_ly"> 
           <router-link to="/"><i class="fa fa-sitemap"></i> Novo nó na rede</router-link>

@@ -17,18 +17,10 @@
               <input id="ip" type="text" name="ip" v-model="servidor.ip" minlength="4">
             </div>
           </div>
-          <div class="control-group">
-              <label class="control-label">Tipo do Servidor:</label>
-              <div class="controls">
-                <label v-for="(tipo, nome) in tipos">
-                  <input type="radio" v-model="servidor.tipoServidor" v-bind:value="tipo" name="tipoServidor" >
-                  {{ nome }}
-                </label>
-              </div>
-          </div>
+          <tipo-servidor-componente v-model="servidor"></tipo-servidor-componente>
           <div class="form-actions">
             <button class="btn btn-success">Adicionar</button>
-            <router-link to="/usuario/" class="btn btn-primary">Voltar</router-link>
+            <router-link to="/servidor/" class="btn btn-primary">Voltar</router-link>
           </div>
         </form>
       </div>
@@ -37,9 +29,8 @@
 </template>
 
 <script>
-import TipoServidorSerive from '@/components/service/tipoServidorService'
-// import ServidorSerive from '@/components/service/servidorSerive'
-// import VueNotifications from 'vue-notifications'
+import ServidorSerive from '@/components/service/servidorService'
+import TipoServidorComponente from '@/components/servidor/components/TipoServidor'
 
 export default {
   data: function () {
@@ -50,25 +41,12 @@ export default {
   },
   methods: {
     adicionarServidor: function (servidor) {
-      console.log(servidor)
+      ServidorSerive.post(servidor)
       event.preventDefault()
     }
-    //   var t = this
-    //   UsuarioService.post(usuario.nome).then(
-    //     response => {
-    //       VueNotifications.success({title: 'Sucesso!', message: response.body.data.nome + ' adicionado com sucesso!'})
-    //       t.$router.push('/usuario/' + response.body.data.id)
-    //     },
-    //     error => {
-    //       error.data.errors.map(erro =>
-    //         VueNotifications.error({title: 'Erro!', message: erro})
-    //       )
-    //     }
-    //   )
-    // }
   },
-  mounted: function () {
-    TipoServidorSerive.get(tipos => { this.tipos = tipos })
+  components: {
+    TipoServidorComponente
   }
 }
 </script>
