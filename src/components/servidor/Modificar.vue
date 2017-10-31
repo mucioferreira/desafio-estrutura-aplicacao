@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import ServidorService from '@/components/service/servidorService'
+import ServidorService from '@/components/service/servidor'
 import TipoServidorComponente from '@/components/servidor/components/TipoServidor'
 
 export default {

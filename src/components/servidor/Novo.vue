@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import ServidorSerive from '@/components/service/servidorService'
+import ServidorSerive from '@/components/service/servidor'
 import TipoServidorComponente from '@/components/servidor/components/TipoServidor'
 
 export default {

@@ -6,12 +6,11 @@
           <option v-for="(tipo, nome) in tipos"  v-bind:value="tipo">{{ nome }}</option>
         </select>
       </div>
-
   </div>
 </template>
 
 <script>
-import TipoServidorSerive from '@/components/service/tipoServidorService'
+import TipoServidorSerive from '@/components/service/tipoServidor'
 
 export default {
   props: ['value'],

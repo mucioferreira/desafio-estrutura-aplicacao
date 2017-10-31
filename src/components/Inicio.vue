@@ -12,10 +12,10 @@
           <router-link to="/servidor/novo"><i class="fa fa-server"></i> Novo Servidor</router-link>
         </li>
         <li class="bg_ly"> 
-          <router-link to="/"><i class="fa fa-sitemap"></i> Novo nó na rede</router-link>
+          <router-link to="/no-da-rede/novo"><i class="fa fa-sitemap"></i> Novo nó na rede</router-link>
         </li>
         <li class="bg_lo"> 
-          <router-link to="/"><i class="fa fa-users"></i> Novo usuário na rede</router-link>
+          <router-link to="/usuario-da-rede/novo"><i class="fa fa-users"></i> Novo usuário na rede</router-link>
         </li>
       </ul>
     </div>

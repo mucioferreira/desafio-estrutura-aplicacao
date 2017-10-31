@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import UsuarioService from '@/components/service/usuarioService'
+import UsuarioService from '@/components/service/usuario'
 
 export default {
   data: function () {

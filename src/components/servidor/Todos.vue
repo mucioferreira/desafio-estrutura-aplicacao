@@ -1,23 +1,26 @@
 <template>
   <aside>
-    <h1>Todos Usuários</h1>
+    <h1>Todos Servidores</h1>
     <hr>
+
     <div class="widget-box">
       <div class="widget-content nopadding">
         <table class="table table-bordered data-table">
           <thead>
-            <tr>
-              <th>#</th>
-              <th>Nome</th>
-              <th colspan="1"></th>
-            </tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Ip</th>
+            <th>Tipo</th>
+            <th></th>
           </thead>
           <tbody>
-            <tr v-for="usuario in usuarios" class="grade">
-              <td>{{ usuario.id }}</td>
-              <td><router-link :to="`/usuario/${usuario.id}`">{{ usuario.nome }}</router-link></td>
+            <tr v-for="servidor in servidores" class="grade">
+              <td>{{ servidor.id }}</td>
+              <td><router-link :to="`/servidor/${servidor.id}`">{{ servidor.nome }}</router-link></td>
+              <td>{{ servidor.ip }}</td>
+              <td>{{ servidor.nomeTipoServidor }}</td>
               <td>
-                <router-link :to="`/usuario/${usuario.id}`" class="btn btn-primary">
+                <router-link :to="`/servidor/${servidor.id}`" class="btn btn-primary">
                   <i class="fa fa-plus"></i>
                 </router-link>
               </td>
@@ -34,13 +37,13 @@
 </template>
 
 <script>
-import UsuarioService from '@/components/service/usuarioService'
+import ServidorService from '@/components/service/servidor'
 
 export default {
   data: function () {
     return {
-      usuario: {},
-      usuarios: [],
+      servidor: {},
+      servidores: [],
       pagina: null,
       totalPaginas: 0
     }
@@ -58,7 +61,7 @@ export default {
   },
   watch: {
     pagina: function () {
-      UsuarioService.carregarUsuarios(this.pagina, usuarios => { this.usuarios = usuarios }, totalPaginas => { this.totalPaginas = totalPaginas })
+      ServidorService.carregarServidores(this.pagina, servidores => { this.servidores = servidores }, totalPaginas => { this.totalPaginas = totalPaginas })
     }
   }
 }

@@ -4,13 +4,13 @@
       <h3 class="modal-title">Confirmar exclusão</h3>
     </div>
     <div class="modal-body">
-      Tem certeza que deseja deletar o servidor: <strong>{{ value.nome }}</strong>?
+      Tem certeza que deseja deletar o usuário: <strong>{{ value.nome }}</strong>?
     </div>
     <div class="modal-footer">
-      <button v-on:click="closeExcluirServidor()" class="btn btn-primary">
+      <button v-on:click="closeExcluir()" class="btn btn-primary">
         Não
       </button>
-      <button v-on:click="excluirServidor(value)" class="btn">
+      <button v-on:click="excluirUsuario(value)" class="btn">
         Sim
       </button>
     </div>
@@ -18,20 +18,20 @@
 </template>
 
 <script>
-import ServidorService from '@/components/service/servidorService'
+import UsuarioService from '@/components/service/usuario'
 
 export default {
   props: ['value', 'name'],
   methods: {
-    excluirServidor: function (servidor) {
-      ServidorService.delete(servidor)
-      this.closeExcluirServidor()
+    excluirUsuario: function (usuario) {
+      UsuarioService.delete(usuario)
+      this.closeExcluir()
       event.preventDefault()
     },
-    closeExcluirServidor: function () {
+    closeExcluir: function () {
       this.$modal.hide(this.name)
     },
-    openExcluirServidor: function () {
+    openExcluir: function () {
       this.$modal.show(this.name)
     }
   }

@@ -6,7 +6,20 @@ html, body, #app {height:100%}
 /* Main */
 
 /*Bootstrap-overlay*/
+.selecionador {
+	padding-left: 75px;
+}
 
+.buttonBuscar {
+	position: absolute;
+	top: 7px;
+}
+
+.btn-buscar {
+	color: #fff;
+	padding: 3px 16px;
+	background-color: #222222;
+}
 
 body {
 	overflow-x: hidden;
@@ -1120,12 +1133,14 @@ form {
 	border-bottom: 0;
 }
 .form-horizontal .controls {
+	position: relative;
 	display: inline;
 	padding: 10px 0;
 }
 .form-horizontal input[type=text], .form-horizontal input[type=password], .form-horizontal textarea {
 	margin-top: 7px;
 	width: 100%;
+	margin-left: 0;
 }
 .row-fluid .span20 {
 	width:97.8%
@@ -1259,6 +1274,11 @@ form {
 }
 /* Responsive design */
 @media (max-width: 480px) {
+.modal-box {
+	width: 350px !important;
+	left: 50% !important;
+	margin-left: -175px;
+}
 #header h1 {
     top: 7px;
     left: 5px;
@@ -1443,6 +1463,11 @@ form {
 }
 }
  @media (min-width: 481px) and (max-width: 970px) {
+ .modal-box {
+	width: 465px !important;
+	left: 50% !important;
+	margin-left: -232px;
+}
 body {
 	background:#49CCED
 }
@@ -1557,6 +1582,7 @@ body {
  margin-left: 0;
  width: auto;
 }
+
 }
 @media (max-width: 979px) {
 div.dataTables_wrapper .ui-widget-header {

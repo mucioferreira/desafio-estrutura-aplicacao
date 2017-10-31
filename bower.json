@@ -19,6 +19,6 @@
     "bootstrap": "^3.3.7",
     "components-font-awesome": "^4.7.0",
     "jquery-validation": "^1.17.0",
-    "jquery.uniform": "^4.2.2"
+    "jquery.uniform": "^4.2.2",
   }
 }

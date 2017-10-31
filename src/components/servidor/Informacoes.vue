@@ -82,8 +82,8 @@
 </template>
 
 <script>
-import ServidorService from '@/components/service/servidorService'
-import RemoverServidor from '@/components/servidor/components/RemoverServidor'
+import ServidorService from '@/components/service/servidor'
+import RemoverServidor from '@/components/servidor/components/Remover'
 
 export default {
   data: function () {

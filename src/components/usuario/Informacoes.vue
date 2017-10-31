@@ -12,7 +12,7 @@
           
           <div class="action-buttons">
             <router-link :to="`/usuario/modificar/${usuario.id}`"><i class="fa fa-pencil"></i></router-link>
-            <a v-on:click="openExcluirServidor(servidor)"> <i class="fa fa-trash"></i> </a>
+            <a v-on:click="openExcluirUsuario(usuario)"> <i class="fa fa-trash"></i> </a>
           </div>
         </div>
         <div id="collapseOne" class="collapse in">
@@ -65,12 +65,13 @@
     </div>
     <router-link to="/usuario/" class="btn btn-primary">Voltar</router-link>
 
-     <remover-servidor v-model="usuario" name="excluir"></remover-servidor>
+    <remover-usuario v-model="usuario" name="excluir"></remover-usuario>
   </aside>
 </template>
 
 <script>
-import UsuarioService from '@/components/service/usuarioService'
+import UsuarioService from '@/components/service/usuario'
+import RemoverUsuario from '@/components/usuario/components/Remover'
 
 export default {
   data: function () {
@@ -87,6 +88,9 @@ export default {
   },
   mounted: function () {
     UsuarioService.procurarUsuario(this.$route.params.id, usuario => { this.usuario = usuario }, encontrado => { this.encontrado = encontrado })
+  },
+  components: {
+    RemoverUsuario
   }
 }
 </script>

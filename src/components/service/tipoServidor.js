@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import ConfiguracaoService from '@/components/service/configuracaoService'
+import GeralService from '@/components/service/geral'
 
-const url = ConfiguracaoService.uri + 'tipo-servidor/'
+const url = GeralService.uri + 'tipo-servidor/'
 
 export default {
   get: function (tipos) {
@@ -10,7 +10,7 @@ export default {
         tipos(response.body.data)
       },
       error => {
-        ConfiguracaoService.mensagemErro(error)
+        GeralService.mensagemErro(error)
       }
     )
   }

@@ -4,16 +4,22 @@ import Router from 'vue-router'
 import Inicio from '@/components/Inicio'
 
 import Usuario from '@/components/usuario/Usuario'
-import UsuarioNovo from '@/components/usuario/UsuarioNovo'
-import UsuarioModificar from '@/components/usuario/UsuarioModificar'
-import UsuarioInformacoes from '@/components/usuario/UsuarioInformacoes'
-import UsuarioTodos from '@/components/usuario/UsuarioTodos'
+import UsuarioNovo from '@/components/usuario/Novo'
+import UsuarioModificar from '@/components/usuario/Modificar'
+import UsuarioInformacoes from '@/components/usuario/Informacoes'
+import UsuarioTodos from '@/components/usuario/Todos'
 
 import Servidor from '@/components/servidor/Servidor'
-import ServidorNovo from '@/components/servidor/ServidorNovo'
-import ServidorModificar from '@/components/servidor/ServidorModificar'
-import ServidorInformacoes from '@/components/servidor/ServidorInformacoes'
-import ServidorTodos from '@/components/servidor/ServidorTodos'
+import ServidorNovo from '@/components/servidor/Novo'
+import ServidorModificar from '@/components/servidor/Modificar'
+import ServidorInformacoes from '@/components/servidor/Informacoes'
+import ServidorTodos from '@/components/servidor/Todos'
+
+import UsuarioDaRede from '@/components/usuario_da_rede/UsuarioDaRede'
+import UsuarioDaRedeNovo from '@/components/usuario_da_rede/Novo'
+import UsuarioDaRedeModificar from '@/components/usuario_da_rede/Modificar'
+import UsuarioDaRedeInformacoes from '@/components/usuario_da_rede/Informacoes'
+import UsuarioDaRedeTodos from '@/components/usuario_da_rede/Todos'
 
 Vue.use(Router)
 
@@ -91,6 +97,40 @@ export default new Router({
             {
               path: '',
               component: ServidorTodos
+            }
+          ]
+        },
+        {
+          path: '/usuario-da-rede/',
+          component: UsuarioDaRede,
+          meta: {
+            breadcrumb: 'No da Rede'
+          },
+          children: [
+            {
+              path: '/usuario-da-rede/novo',
+              component: UsuarioDaRedeNovo,
+              meta: {
+                breadcrumb: 'Novo'
+              }
+            },
+            {
+              path: '/usuario-da-rede/modificar/:id',
+              component: UsuarioDaRedeModificar,
+              meta: {
+                breadcrumb: 'Modificar'
+              }
+            },
+            {
+              path: '/usuario-da-rede/:id',
+              component: UsuarioDaRedeInformacoes,
+              meta: {
+                breadcrumb: 'Informação'
+              }
+            },
+            {
+              path: '',
+              component: UsuarioDaRedeTodos
             }
           ]
         }

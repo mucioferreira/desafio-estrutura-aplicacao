@@ -1,8 +1,6 @@
 
 $(document).ready(function(){
 
-	
-	
 	// === Sidebar navigation === //
 	
 	$('.submenu > a').click(function(e)
