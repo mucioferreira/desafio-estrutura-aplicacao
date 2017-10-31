@@ -4,45 +4,28 @@
     <div class="control-group">
       <label for="servidor" class="control-label">Procurar servidor: </label>
         <div class="controls">
-          <input class="selecionador" id="servidor" type="text" name="servidor" v-model="servidor.nome" disabled>
-          <a class="btn-buscar buttonBuscar" v-on:click="openPesquisar()">Buscar</a>
+          <input id="servidor" type="text" name="servidor" v-model="servidor.ip">
         </div>
-        
-    </div>
-  </div>
 
-    <modal classes="modal-box" height="auto" name="procurarServidor">
-      <div class="modal-header">
-        <h3 class="modal-title">Selecionar servidor</h3>
-      </div>
-      <div class="modal-body">
-        <input id="ip" type="text" name="ip" v-model="ip" placeholder="Procurar pelo IP">
-        <table class="table table-bordered data-table">
+        <table v-if="servidores.length" class="table table-bordered data-table">
           <thead>
-            <th>Nome</th>
-            <th>Ip</th>
-            <th></th>
+            <tr>
+              <th>#</th>
+              <th>IP</th>
+              <th>Nome</th>
+            </tr>
           </thead>
           <tbody>
             <tr v-for="servidor in servidores" class="grade">
-              <td>{{ servidor.nome }}</td>
+              <td><input v-on:click="selecionarServidor(servidor)" type="radio" name="servidor"></td>
               <td>{{ servidor.ip }}</td>
-              <td>
-                <a v-on:click="selecionarServidor(servidor)" class="btn btn-primary">
-                  <i class="fa fa-check"></i>
-                </a>
-              </td>
+              <td>{{ servidor.nome }}</td>
             </tr>
           </tbody>
         </table>
-      </div>
-      <div class="modal-footer">
-        <button v-on:click="closePesquisar()" class="btn btn-danger">
-          Cancelar
-        </button>
-      </div>
-    </modal>
-
+        
+    </div>
+  </div>
   </aside>
 </template>
 
@@ -54,26 +37,21 @@ export default {
   data: function () {
     return {
       servidores: [],
-      servidor: {},
-      ip: null
+      servidor: {}
     }
   },
   watch: {
-    ip: _.debounce(function (ip) {
-      ServidorService.procurarPorIp(ip, servidores => { this.servidores = servidores })
-    }, 350)
+    servidor: {
+      handler: _.debounce(function (servidor) {
+        ServidorService.procurarPorIp(servidor.ip, servidores => { this.servidores = servidores })
+      }, 350),
+      deep: true
+    }
   },
   methods: {
     selecionarServidor: function (servidor) {
       this.servidor = servidor
       this.$emit('selecionado', servidor)
-      this.closePesquisar()
-    },
-    closePesquisar: function () {
-      this.$modal.hide('procurarServidor')
-    },
-    openPesquisar: function () {
-      this.$modal.show('procurarServidor')
     }
   }
 }

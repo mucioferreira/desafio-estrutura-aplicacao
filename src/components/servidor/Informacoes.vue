@@ -7,7 +7,7 @@
     </div>
     </div>
     <div v-else>
-      <h2>Nenhum servidor encontrado</h2>
+      <h2>Nenhum servidor encontrado.</h2>
     </div>
     <router-link to="/servidor/" class="btn btn-primary">Voltar</router-link>
   </aside>
