@@ -39,7 +39,6 @@ import UsuarioService from '@/components/service/usuario'
 export default {
   data: function () {
     return {
-      usuario: {},
       usuarios: [],
       pagina: null,
       totalPaginas: 0

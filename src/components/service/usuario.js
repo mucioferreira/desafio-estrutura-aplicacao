@@ -70,7 +70,7 @@ export default {
     this.getId(id).then(
       response => {
         usuario(response.body.data)
-        encontrado(true)
+        if (!(typeof encontrado === 'undefined')) encontrado(true)
       },
       error => {
         GeralService.mensagemErro(error)

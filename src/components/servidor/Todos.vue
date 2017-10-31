@@ -42,7 +42,6 @@ import ServidorService from '@/components/service/servidor'
 export default {
   data: function () {
     return {
-      servidor: {},
       servidores: [],
       pagina: null,
       totalPaginas: 0

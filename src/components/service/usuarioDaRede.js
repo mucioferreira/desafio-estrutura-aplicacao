@@ -25,7 +25,7 @@ export default {
     return Vue.http.get(url + id)
   },
   post: function (usuarioDaRede) {
-    Vue.http.post(url, {servidor: usuarioDaRede.servidor.id, usuario: usuarioDaRede.usuario.id, descricao: usuarioDaRede.descricao}).then(
+    Vue.http.post(url, {servidor: usuarioDaRede.servidor, usuario: usuarioDaRede.usuario, descricao: usuarioDaRede.descricao}).then(
       response => {
         GeralService.mensagemAdicionado(nome)
         router.push(path + response.body.data.id)
@@ -36,7 +36,7 @@ export default {
     )
   },
   put: function (usuarioDaRede) {
-    Vue.http.put(url, {id: usuarioDaRede.id, servidor: usuarioDaRede.servidor.id, usuario: usuarioDaRede.usuario.id, descricao: usuarioDaRede.descricao}).then(
+    Vue.http.put(url, {id: usuarioDaRede.id, servidor: usuarioDaRede.servidor, usuario: usuarioDaRede.usuario, descricao: usuarioDaRede.descricao}).then(
       response => {
         GeralService.mensagemModificado(nome)
         router.push(path + response.body.data.id)
@@ -57,7 +57,7 @@ export default {
       }
     )
   },
-  procurarUsuario: function (id, usuarioDaRede, encontrado) {
+  procurarUsuarioDaRede: function (id, usuarioDaRede, encontrado) {
     this.getId(id).then(
       response => {
         usuarioDaRede(response.body.data)

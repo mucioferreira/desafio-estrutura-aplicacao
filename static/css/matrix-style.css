@@ -19,6 +19,8 @@ html, body, #app {height:100%}
 	color: #fff;
 	padding: 3px 16px;
 	background-color: #222222;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
 
 body {
