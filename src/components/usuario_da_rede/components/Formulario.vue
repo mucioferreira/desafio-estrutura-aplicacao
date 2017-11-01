@@ -21,7 +21,7 @@
         </div>
         <div class="form-actions">
           <button class="btn btn-success">Salvar</button>
-          <router-link to="/usuario-da-rede/" class="btn btn-primary">Voltar</router-link>
+          <router-link to="/usuario-da-rede/" class="btn btn-primary">Cancelar</router-link>
         </div>
       </form>
     </div>

@@ -4,7 +4,7 @@
     <div class="control-group">
       <label for="servidor" class="control-label">Procurar servidor: </label>
         <div class="controls">
-          <input id="servidor" type="text" name="servidor" v-model="ip">
+          <input id="servidor" type="text" name="servidor" v-model="ip" placeholder="Digite o IP do servidor">
         </div>
 
         <table v-if="servidores.length" class="table table-bordered data-table">

@@ -2,7 +2,7 @@
   <aside>
     <div class="widget-box collapsible">
         <div class="widget-title">
-          <a data-toggle="collapse" href="#collapseOne"> 
+          <a data-toggle="collapse" href="#tabelaDoServidor"> 
             <span class="icon"><i class="fa fa-server"></i></span>
             <h5>Informação do servidor | {{ servidor.nome }}</h5>
           </a> 
@@ -17,7 +17,7 @@
             </div>
           </div>
         </div>
-        <div id="collapseOne" class="collapse" v-bind:class="{ in: aberto }">
+        <div id="tabelaDoServidor" class="collapse" v-bind:class="{ in: aberto }">
           <div class="widget-content">
             <table class="table table-bordered table-invoice no-margin">
               <tbody>

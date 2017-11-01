@@ -21,6 +21,12 @@ import UsuarioDaRedeModificar from '@/components/usuario_da_rede/Modificar'
 import UsuarioDaRedeInformacoes from '@/components/usuario_da_rede/Informacoes'
 import UsuarioDaRedeTodos from '@/components/usuario_da_rede/Todos'
 
+import NoDaRede from '@/components/no_da_rede/NoDaRede'
+import NoDaRedeNovo from '@/components/no_da_rede/Novo'
+import NoDaRedeModificar from '@/components/no_da_rede/Modificar'
+import NoDaRedeInformacoes from '@/components/no_da_rede/Informacoes'
+import NoDaRedeTodos from '@/components/no_da_rede/Todos'
+
 Vue.use(Router)
 
 export default new Router({
@@ -104,7 +110,7 @@ export default new Router({
           path: '/usuario-da-rede/',
           component: UsuarioDaRede,
           meta: {
-            breadcrumb: 'No da Rede'
+            breadcrumb: 'Usuario da Rede'
           },
           children: [
             {
@@ -131,6 +137,40 @@ export default new Router({
             {
               path: '',
               component: UsuarioDaRedeTodos
+            }
+          ]
+        },
+        {
+          path: '/no-da-rede/',
+          component: NoDaRede,
+          meta: {
+            breadcrumb: 'Nó da Rede'
+          },
+          children: [
+            {
+              path: '/no-da-rede/novo',
+              component: NoDaRedeNovo,
+              meta: {
+                breadcrumb: 'Novo'
+              }
+            },
+            {
+              path: '/no-da-rede/modificar/:id',
+              component: NoDaRedeModificar,
+              meta: {
+                breadcrumb: 'Modificar'
+              }
+            },
+            {
+              path: '/no-da-rede/:id',
+              component: NoDaRedeInformacoes,
+              meta: {
+                breadcrumb: 'Informação'
+              }
+            },
+            {
+              path: '',
+              component: NoDaRedeTodos
             }
           ]
         }

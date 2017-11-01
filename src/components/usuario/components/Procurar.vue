@@ -4,7 +4,7 @@
     <div class="control-group">
       <label for="usuario" class="control-label">Procurar usuario: </label>
         <div class="controls">
-          <input id="usuario" type="text" name="usuario" v-model="nome">
+          <input id="usuario" type="text" name="usuario" v-model="nome" placeholder="Digite o NOME do usuario">
         </div>
 
         <table v-if="usuarios.length" class="table table-bordered data-table">

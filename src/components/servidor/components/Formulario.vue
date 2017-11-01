@@ -24,7 +24,7 @@
         </div>
         <div class="form-actions">
           <button class="btn btn-success">Salvar</button>
-          <router-link to="/servidor/" class="btn btn-danger">Cancelar</router-link>
+          <router-link to="/servidor/" class="btn btn-primary">Cancelar</router-link>
         </div>
       </form>
     </div>
