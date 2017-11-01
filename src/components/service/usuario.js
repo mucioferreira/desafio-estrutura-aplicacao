@@ -6,9 +6,6 @@ const url = GeralService.uri + 'usuario/'
 const path = '/usuario/'
 
 export default {
-  get: function () {
-    return Vue.http.get(url)
-  },
   carregarUsuarios: function (pagina, usuarios, totalPaginas) {
     Vue.http.get(url + '?pagina=' + pagina).then(
       response => {
@@ -19,9 +16,6 @@ export default {
         GeralService.mensagemErro(error)
       }
     )
-  },
-  getId: function (id) {
-    return Vue.http.get(url + id)
   },
   procurarPorNome: function (nome, usuarios) {
     Vue.http.get(url + '?nome=' + nome).then(
@@ -34,7 +28,7 @@ export default {
     )
   },
   post: function (usuario) {
-    Vue.http.post(url, {nome: usuario.nome}).then(
+    Vue.http.post(url, JSON.stringify(usuario)).then(
       response => {
         GeralService.mensagemAdicionado(response.body.data.nome)
         router.push(path + response.body.data.id)
@@ -45,7 +39,7 @@ export default {
     )
   },
   put: function (usuario) {
-    Vue.http.put(url, {id: usuario.id, nome: usuario.nome}).then(
+    Vue.http.put(url, JSON.stringify(usuario)).then(
       response => {
         GeralService.mensagemModificado(response.body.data.nome)
         router.push(path + response.body.data.id)
@@ -56,7 +50,7 @@ export default {
     )
   },
   delete: function (usuario) {
-    Vue.http.delete(url, {body: {id: usuario.id}}).then(
+    Vue.http.delete(url, {body: JSON.stringify(usuario)}).then(
       response => {
         GeralService.mensagemExcluido(usuario.nome)
         router.push(path)
@@ -67,7 +61,7 @@ export default {
     )
   },
   procurarUsuario: function (id, usuario, encontrado) {
-    this.getId(id).then(
+    Vue.http.get(url + id).then(
       response => {
         usuario(response.body.data)
         if (!(typeof encontrado === 'undefined')) encontrado(true)

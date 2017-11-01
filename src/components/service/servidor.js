@@ -6,9 +6,6 @@ const url = GeralService.uri + 'servidor/'
 const path = '/servidor/'
 
 export default {
-  get: function () {
-    return Vue.http.get(url)
-  },
   carregarServidores: function (pagina, servidores, totalPaginas) {
     Vue.http.get(url + '?pagina=' + pagina).then(
       response => {
@@ -19,9 +16,6 @@ export default {
         GeralService.mensagemErro(error)
       }
     )
-  },
-  getId: function (id) {
-    return Vue.http.get(url + id)
   },
   procurarPorIp: function (ip, servidores) {
     Vue.http.get(url + '?ip=' + ip).then(
@@ -34,7 +28,7 @@ export default {
     )
   },
   post: function (servidor) {
-    Vue.http.post(url, {nome: servidor.nome, ip: servidor.ip, tipoServidor: servidor.tipoServidor}).then(
+    Vue.http.post(url, JSON.stringify(servidor)).then(
       response => {
         GeralService.mensagemAdicionado(response.body.data.nome)
         router.push(path + response.body.data.id)
@@ -45,7 +39,7 @@ export default {
     )
   },
   put: function (servidor) {
-    Vue.http.put(url, {id: servidor.id, nome: servidor.nome, ip: servidor.ip, tipoServidor: servidor.tipoServidor}).then(
+    Vue.http.put(url, JSON.stringify(servidor)).then(
       response => {
         GeralService.mensagemModificado(response.body.data.nome)
         router.push(path + response.body.data.id)
@@ -56,7 +50,7 @@ export default {
     )
   },
   delete: function (servidor) {
-    Vue.http.delete(url, {body: {id: servidor.id}}).then(
+    Vue.http.delete(url, {body: JSON.stringify(servidor)}).then(
       response => {
         GeralService.mensagemExcluido(servidor.nome)
         router.push(path)
@@ -67,7 +61,7 @@ export default {
     )
   },
   procurarServidor: function (id, servidor, encontrado) {
-    this.getId(id).then(
+    Vue.http.get(url + id).then(
       response => {
         servidor(response.body.data)
         if (!(typeof encontrado === 'undefined')) encontrado(true)

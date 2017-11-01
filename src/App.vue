@@ -30,14 +30,12 @@
 	                <li class="submenu"> <a href="#"><i class="fa fa-sitemap"></i> <span>Nó da Rede</span> <i class="i fa fa-caret-down"></i></a>
 	                    <ul>
 	                        <li><router-link to="/no-da-rede/novo">Novo nó na rede</router-link></li>
-	                        <li><router-link to="/no-da-rede/buscar">Buscar nó na rede</router-link></li>
 	                        <li><router-link to="/no-da-rede/">Todos nós da rede</router-link></li>
 	                    </ul>
 	                </li>
 	                <li class="submenu"> <a href="#"><i class="fa fa-users"></i> <span>Usuário da Rede</span> <i class="i fa fa-caret-down"></i></a>
 	                    <ul>
 	                        <li><router-link to="/usuario-da-rede/novo">Novo usuário na rede</router-link></li>
-	                        <li><router-link to="/usuario-da-rede/buscar">Buscar usuário na rede</router-link></li>
 	                        <li><router-link to="/usuario-da-rede/">Todos usuários da rede</router-link></li>
 	                    </ul>
 	                </li>

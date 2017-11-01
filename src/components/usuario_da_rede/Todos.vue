@@ -7,15 +7,15 @@
         <table class="table table-bordered data-table">
           <thead>
             <th>#</th>
-            <th>IP do Servidor</th>
             <th>Nome do Usuario</th>
+            <th>IP do Servidor</th>
             <th colspan="1"></th>
           </thead>
           <tbody>
             <tr v-for="usuarioDaRede in usuariosDaRede" class="grade">
               <td><router-link :to="`/usuario-da-rede/${usuarioDaRede.id}`">{{ usuarioDaRede.id }}</router-link></td>
-              <td><router-link :to="`/servidor/${usuarioDaRede.servidor.id}`">{{ usuarioDaRede.servidor.ip }}</router-link></td>
               <td><router-link :to="`/usuario/${usuarioDaRede.usuario.id}`">{{ usuarioDaRede.usuario.nome }}</router-link></td>
+              <td><router-link :to="`/servidor/${usuarioDaRede.servidor.id}`">{{ usuarioDaRede.servidor.ip }}</router-link></td>
               <td>
                 <router-link :to="`/usuario-da-rede/${usuarioDaRede.id}`" class="btn btn-primary">
                   <i class="fa fa-plus"></i>
