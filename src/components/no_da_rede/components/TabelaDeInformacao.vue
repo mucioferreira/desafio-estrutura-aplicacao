@@ -1,6 +1,6 @@
 <template>
   <aside>
-    <a v-if="noDaRede.proximoNo" :href="`#/no-da-rede/${noDaRede.proximoNo.id}`" class="btn btn-info" style="float: right; margin-bottom: 15px;">Proximo nó</a>
+    <a v-if="noDaRede.proximo" :href="`#/no-da-rede/${noDaRede.proximo}`" class="btn btn-info" style="float: right; margin-bottom: 15px;">Proximo nó</a>
     <div class="widget-box">
      <div class="action-buttons">
        <div v-if="modificar">
@@ -32,6 +32,7 @@
 <script>
 import TabelaDeInformacaoDoServidor from '@/components/servidor/components/TabelaDeInformacao'
 import RemoverNoDaRede from '@/components/no_da_rede/components/Remover'
+import ServidorService from '@/components/service/servidor'
 
 export default {
   props: ['noDaRede', 'modificar'],
@@ -39,6 +40,11 @@ export default {
     openExcluirNoDaRede: function (noDaRede) {
       this.noDaRede = noDaRede
       this.$modal.show('excluirNoDaRede')
+    }
+  },
+  watch: {
+    noDaRede: function (noDaRede) {
+      if (typeof noDaRede.servidor !== 'object') ServidorService.procurarServidor(noDaRede.servidor, servidor => { noDaRede.servidor = servidor })
     }
   },
   components: {

@@ -18,6 +18,16 @@ export default {
       }
     )
   },
+  carregarNosDaRedeTodos: function (usuariosDaRede) {
+    Vue.http.get(url + 'todos').then(
+      response => {
+        usuariosDaRede(response.body.data)
+      },
+      error => {
+        GeralService.mensagemErro(error)
+      }
+    )
+  },
   procurarPorIpServidorPrincipal: function (ip, servidores) {
     Vue.http.get(url + '?ip=' + ip).then(
       response => {
@@ -29,7 +39,7 @@ export default {
     )
   },
   post: function (noDaRede) {
-    Vue.http.post(url, JSON.stringify(noDaRede)).then(
+    Vue.http.post(url, {id: noDaRede.id, ambienteDaRede: noDaRede.ambienteDaRede, proximo: noDaRede.proximo.id, servidor: noDaRede.servidor.id}).then(
       response => {
         GeralService.mensagemAdicionado(nome)
         router.push(path + response.body.data.id)
@@ -40,7 +50,7 @@ export default {
     )
   },
   put: function (noDaRede) {
-    Vue.http.put(url, JSON.stringify(noDaRede)).then(
+    Vue.http.put(url, {id: noDaRede.id, ambienteDaRede: noDaRede.ambienteDaRede, proximo: noDaRede.proximo.id, servidor: noDaRede.servidor.id}).then(
       response => {
         GeralService.mensagemModificado(nome)
         router.push(path + response.body.data.id)

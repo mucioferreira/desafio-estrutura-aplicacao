@@ -15,7 +15,7 @@ export default {
     return {
       noDaRede: {
         servidor: {},
-        proximoNo: null
+        proximo: {}
       }
     }
   },

@@ -18,8 +18,8 @@ import UsuarioFormulario from '@/components/usuario/components/Formulario'
 export default {
   data: function () {
     return {
-      encontrado: false,
-      usuario: null
+      usuario: {},
+      encontrado: false
     }
   },
   methods: {

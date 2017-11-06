@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 import Inicio from '@/components/Inicio'
+import InicioDesenho from '@/components/InicioDesenho'
 
 import Usuario from '@/components/usuario/Usuario'
 import UsuarioNovo from '@/components/usuario/Novo'
@@ -38,6 +39,12 @@ export default new Router({
         breadcrumb: 'Início'
       },
       children: [
+        // Router do Inicio
+        {
+          path: '',
+          component: InicioDesenho
+        },
+        // Router de Usuarios
         {
           path: '/usuario/',
           component: Usuario,
@@ -45,6 +52,10 @@ export default new Router({
             breadcrumb: 'Usuario'
           },
           children: [
+            {
+              path: '',
+              component: UsuarioTodos
+            },
             {
               path: '/usuario/novo',
               component: UsuarioNovo,
@@ -65,13 +76,10 @@ export default new Router({
               meta: {
                 breadcrumb: 'Informação'
               }
-            },
-            {
-              path: '',
-              component: UsuarioTodos
             }
           ]
         },
+        // Router de Servidores
         {
           path: '/servidor/',
           component: Servidor,
@@ -79,6 +87,10 @@ export default new Router({
             breadcrumb: 'Servidor'
           },
           children: [
+            {
+              path: '',
+              component: ServidorTodos
+            },
             {
               path: '/servidor/novo',
               component: ServidorNovo,
@@ -99,13 +111,10 @@ export default new Router({
               meta: {
                 breadcrumb: 'Informação'
               }
-            },
-            {
-              path: '',
-              component: ServidorTodos
             }
           ]
         },
+        // Router de Usuarios da Rede
         {
           path: '/usuario-da-rede/',
           component: UsuarioDaRede,
@@ -113,6 +122,10 @@ export default new Router({
             breadcrumb: 'Usuario da Rede'
           },
           children: [
+            {
+              path: '',
+              component: UsuarioDaRedeTodos
+            },
             {
               path: '/usuario-da-rede/novo',
               component: UsuarioDaRedeNovo,
@@ -133,13 +146,10 @@ export default new Router({
               meta: {
                 breadcrumb: 'Informação'
               }
-            },
-            {
-              path: '',
-              component: UsuarioDaRedeTodos
             }
           ]
         },
+        // Router de Nos da Rede
         {
           path: '/no-da-rede/',
           component: NoDaRede,
@@ -147,6 +157,10 @@ export default new Router({
             breadcrumb: 'Nó da Rede'
           },
           children: [
+            {
+              path: '',
+              component: NoDaRedeTodos
+            },
             {
               path: '/no-da-rede/novo',
               component: NoDaRedeNovo,
@@ -167,10 +181,6 @@ export default new Router({
               meta: {
                 breadcrumb: 'Informação'
               }
-            },
-            {
-              path: '',
-              component: NoDaRedeTodos
             }
           ]
         }

@@ -48,6 +48,7 @@
 
 <script>
 import NoDaRedeService from '@/components/service/noDaRede'
+import ServidorService from '@/components/service/servidor'
 
 export default {
   data: function () {
@@ -71,6 +72,11 @@ export default {
   watch: {
     pagina: function () {
       NoDaRedeService.carregarNosDaRede(this.pagina, nosDaRede => { this.nosDaRede = nosDaRede }, totalPaginas => { this.totalPaginas = totalPaginas })
+    },
+    nosDaRede: function (nosDaRede) {
+      nosDaRede.forEach(function (noDaRede) {
+        ServidorService.procurarServidor(noDaRede.servidor, servidor => { noDaRede.servidor = servidor })
+      })
     }
   }
 }

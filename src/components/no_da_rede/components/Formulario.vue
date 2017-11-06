@@ -8,17 +8,17 @@
             <tabela-servidor v-if="noDaRede.servidor.id" :servidor="noDaRede.servidor" :aberto="true"></tabela-servidor>
           </div>
           <div class="span6" >
-            <procurar-no @selecionado="selecionarProximoNo" :selecionar="true"></procurar-no>
-            <div v-if="noDaRede.proximoNo" class="widget-box collapsible">
+            <procurar-no @selecionado="selecionarProximo" :selecionar="true"></procurar-no>
+            <div v-if="noDaRede.proximo.id" class="widget-box collapsible">
               <div class="widget-title">
                 <a data-toggle="collapse" href="#collapseTwo"> 
                   <span class="icon"><i class="fa fa-server"></i></span>
-                  <h5>Informação do servidor |asdasd}</h5>
+                  <h5>Informação do Nó</h5>
                 </a> 
               </div>
               <div id="collapseTwo" class="collapse in">
                 <div class="widget-content">
-                  <tabela-no :noDaRede="noDaRede.proximoNo" :aberto="true"></tabela-no>
+                  <tabela-no :noDaRede="noDaRede.proximo" :aberto="true"></tabela-no>
                 </div>
               </div>
             </div>
@@ -59,16 +59,17 @@ export default {
   props: ['noDaRede', 'action'],
   data: function () {
     return {
-      ambientes: null
+      ambientes: null,
+      proximoSelecionado: null
     }
   },
   methods: {
     selecionarServidor: function (servidor) {
       this.noDaRede.servidor = servidor
     },
-    selecionarProximoNo: function (proximoNo) {
-      this.noDaRede.proximoNo = proximoNo
-      if (proximoNo !== null) this.noDaRede.ambienteDaRede = proximoNo.ambienteDaRede
+    selecionarProximo: function (proximo) {
+      this.noDaRede.proximo = proximo
+      if (proximo !== null) this.noDaRede.ambienteDaRede = proximo.ambienteDaRede
     },
     actionMethod: function (noDaRede) {
       this.action(noDaRede)

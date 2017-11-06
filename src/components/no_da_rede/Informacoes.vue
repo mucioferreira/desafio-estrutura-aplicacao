@@ -13,6 +13,7 @@
 <script>
 import NoDaRedeService from '@/components/service/noDaRede'
 import TabelaDeInformacaoDoNoDaRede from '@/components/no_da_rede/components/TabelaDeInformacao'
+import ServidorService from '@/components/service/servidor'
 
 export default {
   data: function () {
@@ -32,6 +33,10 @@ export default {
   watch: {
     '$route': function () {
       this.carregarDados()
+    },
+    noDaRede: function (noDaRede) {
+      if (typeof noDaRede.servidor !== 'object') ServidorService.procurarServidor(noDaRede.servidor, servidor => { noDaRede.servidor = servidor })
+      if (typeof noDaRede.proximo !== 'object') NoDaRedeService.procurarNoDaRede(noDaRede.proximo, proximo => { noDaRede.proximo = proximo })
     }
   },
   components: {

@@ -5,10 +5,10 @@
       <label for="servidor" class="control-label">Procurar nó da rede: </label>
         <div class="controls">
           <input id="servidor" type="text" name="servidor" v-model="ip" placeholder="Digite o IP do servidor principal">
-          <a v-on:click="selecionarNo(null)" > Selecionar nenhum</a>
+          <a v-on:click="selecionarNoDaRede(null)" > Selecionar nenhum</a>
         </div>
 
-        <table v-if="nos.length" class="table table-bordered data-table">
+        <table v-if="nosDaRede.length" class="table table-bordered data-table">
           <thead>
             <tr>
               <th>#</th>
@@ -17,26 +17,26 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="no in nos" class="grade">
-              <td v-if="selecionar"><a v-on:click="selecionarNo(no)" class="btn btn-warning">Selecionar</a></td>
+            <tr v-for="noDaRede in nosDaRede" class="grade">
+              <td v-if="selecionar"><a v-on:click="selecionarNoDaRede(noDaRede)" class="btn btn-warning">Selecionar</a></td>
               <td v-else>
-                <router-link :to="`/servidor/${no.servidor.id}`" class="btn btn-primary"><i class="fa fa-arrow-left"></i></router-link>
+                <router-link :to="`/servidor/${noDaRede.servidor.id}`" class="btn btn-primary"><i class="fa fa-arrow-left"></i></router-link>
               </td>
               <td>
                 <table class="table table-bordered table-invoice no-margin">
                   <tbody>
                     <tr>
                       <td><strong>Nome</strong></td>
-                      <td>{{ no.servidor.nome }}</td>
+                      <td>{{ noDaRede.servidor.nome }}</td>
                     </tr>
                     <tr>
                       <td><strong>IP</strong></td>
-                      <td>{{ no.servidor.ip }}</td>
+                      <td>{{ noDaRede.servidor.ip }}</td>
                     </tr>
                   </tbody>
                 </table>
               </td>
-              <td>{{ no.nomeAmbienteDaRede }}</td>
+              <td>{{ noDaRede.nomeAmbienteDaRede }}</td>
             </tr>
           </tbody>
         </table>
@@ -48,25 +48,28 @@
 <script>
 import _ from 'lodash'
 import NoDaRedeService from '@/components/service/noDaRede'
+import ServidorService from '@/components/service/servidor'
 
 export default {
   props: ['selecionar'],
   data: function () {
     return {
-      nos: [],
+      nosDaRede: [],
       ip: ''
     }
   },
   watch: {
     ip: _.debounce(function (ip) {
-      NoDaRedeService.procurarPorIpServidorPrincipal(ip, nos => { this.nos = nos })
-    }, 350)
-
+      NoDaRedeService.procurarPorIpServidorPrincipal(ip, nosDaRede => { this.nosDaRede = nosDaRede })
+    }, 350),
+    nosDaRede: function (nosDaRede) {
+      nosDaRede.forEach(noDaRede => ServidorService.procurarServidor(noDaRede.servidor, servidor => { noDaRede.servidor = servidor }))
+    }
   },
   methods: {
-    selecionarNo: function (no) {
-      this.$emit('selecionado', no)
-      this.nos = []
+    selecionarNoDaRede: function (noDaRede) {
+      this.$emit('selecionado', noDaRede)
+      this.nosDaRede = []
     }
   }
 }
