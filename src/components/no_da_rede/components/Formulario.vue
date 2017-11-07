@@ -5,11 +5,11 @@
         <div class="row-fluid">
           <div class="span6" >
             <procurar-servidor @selecionado="selecionarServidor" :selecionar="true"></procurar-servidor>
-            <tabela-servidor v-if="noDaRede.servidor.id" :servidor="noDaRede.servidor" :aberto="true"></tabela-servidor>
+            <tabela-servidor v-if="noDaRede.servidor.id" :servidor="noDaRede.servidor" :aberto="true" nome="servidorSelecionado"></tabela-servidor>
           </div>
           <div class="span6" >
             <procurar-no @selecionado="selecionarProximo" :selecionar="true"></procurar-no>
-            <div v-if="noDaRede.proximo.id" class="widget-box collapsible">
+            <div v-if="hasProximo" class="widget-box collapsible">
               <div class="widget-title">
                 <a data-toggle="collapse" href="#collapseTwo"> 
                   <span class="icon"><i class="fa fa-server"></i></span>
@@ -35,7 +35,7 @@
         <div class="control-group">
           <label for="descricao" class="control-label">Descrição</label>
           <div class="controls">
-            <textarea id="descricao" name="descricao" maxlength="255" v-model="noDaRede.descricao"></textarea>
+            <textarea id="descricao" name="descricao" maxlength="255" v-model="noDaRede.descricaoDaRede"></textarea>
           </div>
         </div>
         <div class="form-actions">
@@ -78,6 +78,11 @@ export default {
   },
   mounted: function () {
     AmbienteDaRedeService.get(ambientes => { this.ambientes = ambientes })
+  },
+  computed: {
+    hasProximo: function () {
+      return (typeof this.noDaRede.proximo === 'object') && (this.noDaRede.proximo != null)
+    }
   },
   components: {
     procurarServidor: ProcurarServidorComponente,

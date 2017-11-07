@@ -2,7 +2,7 @@
   <aside>
     <div class="widget-box collapsible">
         <div class="widget-title">
-          <a data-toggle="collapse" href="#tabelaDoServidor"> 
+          <a data-toggle="collapse" :href="`#${ hasName }`"> 
             <span class="icon"><i class="fa fa-server"></i></span>
             <h5>Informação do servidor | {{ servidor.nome }}</h5>
           </a> 
@@ -17,7 +17,7 @@
             </div>
           </div>
         </div>
-        <div id="tabelaDoServidor" class="collapse" v-bind:class="{ in: aberto }">
+        <div :id="hasName" class="collapse" v-bind:class="{ in: aberto }">
           <div class="widget-content">
             <table class="table table-bordered table-invoice no-margin">
               <tbody>
@@ -42,7 +42,6 @@
           </div>
         </div>
       </div>
-
     <remover-servidor v-model="servidor" name="excluirServidor"></remover-servidor>
   </aside>
 </template>
@@ -51,11 +50,16 @@
 import RemoverServidor from '@/components/servidor/components/Remover'
 
 export default {
-  props: ['servidor', 'modificar', 'aberto'],
+  props: ['servidor', 'modificar', 'aberto', 'nome'],
   methods: {
     openExcluirServidor: function (servidor) {
       this.servidor = servidor
       this.$modal.show('excluirServidor')
+    }
+  },
+  computed: {
+    hasName: function () {
+      return this.nome ? this.nome : 'servidorCollapse'
     }
   },
   components: {

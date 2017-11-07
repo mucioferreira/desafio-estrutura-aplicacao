@@ -6,6 +6,11 @@ const nome = 'Nó da rede'
 const url = GeralService.uri + 'no-da-rede/'
 const path = '/no-da-rede/'
 
+const JSONNoDaRede = function (noDaRede) {
+  if ((typeof noDaRede.proximo === 'number') || (noDaRede.proximo == null)) return {id: noDaRede.id, ambienteDaRede: noDaRede.ambienteDaRede, proximo: noDaRede.proximo, servidor: noDaRede.servidor.id, descricaoDaRede: noDaRede.descricaoDaRede}
+  else return {id: noDaRede.id, ambienteDaRede: noDaRede.ambienteDaRede, proximo: noDaRede.proximo.id, servidor: noDaRede.servidor.id, descricaoDaRede: noDaRede.descricaoDaRede}
+}
+
 export default {
   carregarNosDaRede: function (pagina, usuariosDaRede, totalPaginas) {
     Vue.http.get(url + '?pagina=' + pagina).then(
@@ -39,7 +44,7 @@ export default {
     )
   },
   post: function (noDaRede) {
-    Vue.http.post(url, {id: noDaRede.id, ambienteDaRede: noDaRede.ambienteDaRede, proximo: noDaRede.proximo.id, servidor: noDaRede.servidor.id}).then(
+    Vue.http.post(url, JSONNoDaRede(noDaRede)).then(
       response => {
         GeralService.mensagemAdicionado(nome)
         router.push(path + response.body.data.id)
@@ -50,7 +55,7 @@ export default {
     )
   },
   put: function (noDaRede) {
-    Vue.http.put(url, {id: noDaRede.id, ambienteDaRede: noDaRede.ambienteDaRede, proximo: noDaRede.proximo.id, servidor: noDaRede.servidor.id}).then(
+    Vue.http.put(url, JSONNoDaRede(noDaRede)).then(
       response => {
         GeralService.mensagemModificado(nome)
         router.push(path + response.body.data.id)
@@ -61,7 +66,7 @@ export default {
     )
   },
   delete: function (noDaRede) {
-    Vue.http.delete(url, {body: JSON.stringify(noDaRede)}).then(
+    Vue.http.delete(url, {body: {id: noDaRede.id}}).then(
       response => {
         GeralService.mensagemExcluido(nome)
         router.push(path)

@@ -1,6 +1,6 @@
 <template>
   <aside>
-    <a v-if="noDaRede.proximo" :href="`#/no-da-rede/${noDaRede.proximo}`" class="btn btn-info" style="float: right; margin-bottom: 15px;">Proximo nó</a>
+    <a v-if="noDaRede.proximo" :href="`#/no-da-rede/${linkProximo}`" class="btn btn-info" style="float: right; margin-bottom: 15px;">Proximo nó</a>
     <div class="widget-box">
      <div class="action-buttons">
        <div v-if="modificar">
@@ -40,11 +40,23 @@ export default {
     openExcluirNoDaRede: function (noDaRede) {
       this.noDaRede = noDaRede
       this.$modal.show('excluirNoDaRede')
+    },
+    procurarServidor: function (noDaRede) {
+      if (typeof noDaRede.servidor !== 'object') ServidorService.procurarServidor(noDaRede.servidor, servidor => { noDaRede.servidor = servidor })
     }
+  },
+  mounted: function () {
+    this.procurarServidor(this.noDaRede)
   },
   watch: {
     noDaRede: function (noDaRede) {
-      if (typeof noDaRede.servidor !== 'object') ServidorService.procurarServidor(noDaRede.servidor, servidor => { noDaRede.servidor = servidor })
+      this.procurarServidor(noDaRede)
+    }
+  },
+  computed: {
+    linkProximo: function () {
+      if (typeof this.noDaRede.proximo !== 'object') return this.noDaRede.proximo
+      else return this.noDaRede.proximo.id
     }
   },
   components: {
