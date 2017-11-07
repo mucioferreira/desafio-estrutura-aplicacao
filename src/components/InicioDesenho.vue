@@ -4,35 +4,67 @@
       <div class="legenda">
         <ul> 
           <li>
-            <h4>Legenda - <a v-on:click="selecionarAmbiente(null)"><small>Todos Ambientes</small></a></h4>
-            <p>Qtd. de nós: {{ nosDaRede.length }}</p>
+            <h4>Ambientes - <a v-on:click="selecionarAmbiente(null)"><small>Todos Ambientes</small></a></h4>
           </li>
-          <li><span class="box-legenda box-DESENVOLVIMENTO"></span> <a v-on:click="selecionarAmbiente('DESENVOLVIMENTO')" class="legenda-label">Desenvolvimento</a></li>
-          <li><span class="box-legenda box-HOMOLOGACAO"></span> <a v-on:click="selecionarAmbiente('HOMOLOGACAO')" class="legenda-label">Homologação</a> </li>
-          <li><span class="box-legenda box-LOCAL"></span> <a v-on:click="selecionarAmbiente('LOCAL')" class="legenda-label">Local</a> </li>
-          <li><span class="box-legenda box-PRODUCAO"></span> <a v-on:click="selecionarAmbiente('PRODUCAO')" class="legenda-label">Produção</a> </li>
-          <li><span class="box-legenda box-PADRAO"></span> <a v-on:click="selecionarAmbiente('PADRAO')" class="legenda-label">Nenhum</a> </li>
+          <li>
+            <a v-on:click="selecionarAmbiente('DESENVOLVIMENTO')">
+              <span class="box-legenda box-DESENVOLVIMENTO"></span>
+              <span class="legenda-label">Desenvolvimento</span>
+            </a>
+          </li>
+          <li>
+            <a v-on:click="selecionarAmbiente('HOMOLOGACAO')">
+              <span class="box-legenda box-HOMOLOGACAO"></span>
+              <span class="legenda-label">Homologação</span>
+            </a>
+          </li>
+          <li>
+            <a v-on:click="selecionarAmbiente('LOCAL')">
+              <span class="box-legenda box-LOCAL"></span>
+              <span class="legenda-label">Local</span>
+            </a>
+          </li>
+          <li>
+            <a a v-on:click="selecionarAmbiente('PRODUCAO')">
+              <span class="box-legenda box-PRODUCAO"></span>
+              <span class="legenda-label">Produção</span>
+            </a>
+          </li>
+          <li>
+            <a v-on:click="selecionarAmbiente('PADRAO')">
+              <span class="box-legenda box-PADRAO"></span>
+              <span class="legenda-label">Nenhum</span>
+            </a>
+          </li>
         </ul>
       </div>
 
       <d3-network :net-nodes="nosDaRede" :net-links="links" :options="options" @node-click="nodeClick" @link-click="linkClick"></d3-network>
+      <p>Qtd. de nós: {{ nosDaRede.length }}</p>
 
-      <div class="informacao">213123</div>
-      <tabela-servidor v-if="servidor.id" :servidor="servidor" :aberto="true" nome="servidorSelecionado"></tabela-servidor>
-
-      <div v-if="noDaRede.id" class="widget-box collapsible">
-        <div class="widget-title">
-          <a data-toggle="collapse" href="#collapseTwo"> 
-            <span class="icon"><i class="fa fa-server"></i></span>
-            <h5>Informação do Nó</h5>
-          </a> 
+      <div v-if="informacaoSelecionado" :class="[{ open: informacaoSelecionado }, 'informacao']">
+        <div class="informacao-header">
+          <h4>Informações<a v-on:click="closeInformacao"><i class="fa fa-close"></i></a></h4>
         </div>
-        <div id="collapseTwo" class="collapse in">
-          <div class="widget-content">
-            <tabela-no :noDaRede="noDaRede" :aberto="true"></tabela-no>
+        <div class="informacao-body">
+          <tabela-servidor v-if="servidor.id" :servidor="servidor" :aberto="true" nome="servidorSelecionado"></tabela-servidor>
+
+          <div v-if="noDaRede.id" class="widget-box collapsible">
+            <div class="widget-title">
+              <a data-toggle="collapse" href="#collapseTwo"> 
+                <span class="icon"><i class="fa fa-server"></i></span>
+                <h5>Informação do Nó</h5>
+              </a> 
+            </div>
+            <div id="collapseTwo" class="collapse in">
+              <div class="widget-content">
+                <tabela-no :noDaRede="noDaRede" :aberto="true"></tabela-no>
+              </div>
+            </div>
           </div>
         </div>
       </div>
+
     </div>
   </aside>
 </template>
@@ -51,6 +83,7 @@ export default {
       todosNos: [],
       nosDaRede: [],
       servidores: [],
+      informacaoSelecionado: false,
       servidor: {},
       noDaRede: {},
       links: []
@@ -66,6 +99,11 @@ export default {
     },
     selecionarAmbiente: function (ambienteSelecionado) {
       this.ambienteSelecionado = ambienteSelecionado
+    },
+    closeInformacao: function () {
+      this.informacaoSelecionado = false
+      this.servidor = {}
+      this.noDaRede = {}
     }
   },
   watch: {
@@ -91,12 +129,14 @@ export default {
     nodeClick: function () {
       var t = this
       return function (event, nodeObject) {
+        t.informacaoSelecionado = true
         ServidorService.procurarServidor(nodeObject.servidor, servidor => { t.servidor = servidor })
       }
     },
     linkClick: function () {
       var t = this
       return function (event, linkObject) {
+        t.informacaoSelecionado = true
         NoDaRedeService.procurarNoDaRede(linkObject.sid, noDaRede => { t.noDaRede = noDaRede })
       }
     }
@@ -134,6 +174,37 @@ export default {
   line-height: 20px;
   position: relative;
   top: -5px;
+}
+
+.informacao {
+  position: absolute;
+  right: -15px;
+  top: 30px;
+  width: 35%;
+}
+
+.open {
+  -webkit-animation: open .8s forwards; /* Safari 4.0 - 8.0 */
+  animation: open .8s forwards;
+}
+
+@keyframes open {
+    0%   {right: -300px;}
+    100% {right: -15px;}
+}
+
+.informacao > .informacao-header {
+  position: relative;
+  border-bottom: 1px solid #cdcdcd;
+}
+
+.informacao-body {
+  padding: 0 15px
+}
+
+.informacao > .informacao-header > h4 > a {
+  position: absolute;
+  right: 10px;
 }
 
 .grafico {
@@ -213,5 +284,16 @@ export default {
 
 .link:hover, .node:hover {
   r: 10;
+}
+
+@media (max-width: 767px) {
+  .informacao {
+    position: static;
+    width: 100%;
+  }
+  
+  .legenda {
+    position: static;
+  }
 }
 </style>
