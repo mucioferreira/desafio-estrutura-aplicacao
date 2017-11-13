@@ -14,7 +14,6 @@
 <script>
 import NoDaRedeService from '@/components/service/noDaRede'
 import NoDaRedeFormulario from '@/components/no_da_rede/components/Formulario'
-import ServidorService from '@/components/service/servidor'
 
 export default {
   data: function () {
@@ -28,14 +27,13 @@ export default {
       NoDaRedeService.put(noDaRede)
     }
   },
-  mounted: function () {
-    NoDaRedeService.procurarNoDaRede(this.$route.params.id, noDaRede => { this.noDaRede = noDaRede }, encontrado => { this.encontrado = encontrado })
-  },
   watch: {
     noDaRede: function (noDaRede) {
-      if (typeof noDaRede.servidor !== 'object') ServidorService.procurarServidor(noDaRede.servidor, servidor => { noDaRede.servidor = servidor })
-      if (typeof noDaRede.proximo !== 'object') NoDaRedeService.procurarNoDaRede(noDaRede.proximo, proximo => { noDaRede.proximo = proximo })
+      if (noDaRede.proximo !== null) NoDaRedeService.procurarNoDaRede(noDaRede.proximo, proximo => { noDaRede.proximo = proximo })
     }
+  },
+  beforeCreate: function () {
+    NoDaRedeService.procurarNoDaRede(this.$route.params.id, noDaRede => { this.noDaRede = noDaRede }, encontrado => { this.encontrado = encontrado })
   },
   components: {
     formulario: NoDaRedeFormulario

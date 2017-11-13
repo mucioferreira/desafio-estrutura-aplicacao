@@ -5,7 +5,7 @@
       <label for="servidor" class="control-label">Procurar nó da rede: </label>
         <div class="controls">
           <input id="servidor" type="text" name="servidor" v-model="ip" placeholder="Digite o IP do servidor principal">
-          <a v-on:click="selecionarNoDaRede(null)" > Selecionar nenhum</a>
+          <a v-if="!nenhum" v-on:click="selecionarNoDaRede(null)" > Selecionar nenhum</a>
         </div>
 
         <table v-if="nosDaRede.length" class="table table-bordered data-table">
@@ -48,10 +48,9 @@
 <script>
 import _ from 'lodash'
 import NoDaRedeService from '@/components/service/noDaRede'
-import ServidorService from '@/components/service/servidor'
 
 export default {
-  props: ['selecionar'],
+  props: ['selecionar', 'nenhum'],
   data: function () {
     return {
       nosDaRede: [],
@@ -61,10 +60,7 @@ export default {
   watch: {
     ip: _.debounce(function (ip) {
       NoDaRedeService.procurarPorIpServidorPrincipal(ip, nosDaRede => { this.nosDaRede = nosDaRede })
-    }, 350),
-    nosDaRede: function (nosDaRede) {
-      nosDaRede.forEach(noDaRede => ServidorService.procurarServidor(noDaRede.servidor, servidor => { noDaRede.servidor = servidor }))
-    }
+    }, 350)
   },
   methods: {
     selecionarNoDaRede: function (noDaRede) {

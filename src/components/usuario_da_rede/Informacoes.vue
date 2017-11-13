@@ -3,7 +3,7 @@
     <div v-if="encontrado">
       <h1>Informação do usuário da rede</h1>
       <hr>
-      <tabela-usuario-da-rede :usuarioDaRede="usuarioDaRede" :modificar="true"></tabela-usuario-da-rede>
+      <tabela-usuario-da-rede :usuarioDaRede="usuarioDaRede" :modificar="true" :aberto="true"></tabela-usuario-da-rede>
     </div>
     <div v-else>Nenhum usuário da rede encontrado.</div>
     <router-link to="/usuario-da-rede/" class="btn btn-primary">Voltar</router-link>

@@ -7,15 +7,15 @@ const url = GeralService.uri + 'no-da-rede/'
 const path = '/no-da-rede/'
 
 const JSONNoDaRede = function (noDaRede) {
-  if ((typeof noDaRede.proximo === 'number') || (noDaRede.proximo == null)) return {id: noDaRede.id, ambienteDaRede: noDaRede.ambienteDaRede, proximo: noDaRede.proximo, servidor: noDaRede.servidor.id, descricaoDaRede: noDaRede.descricaoDaRede}
-  else return {id: noDaRede.id, ambienteDaRede: noDaRede.ambienteDaRede, proximo: noDaRede.proximo.id, servidor: noDaRede.servidor.id, descricaoDaRede: noDaRede.descricaoDaRede}
+  if ((typeof noDaRede.proximo === 'number') || (noDaRede.proximo == null)) return {id: noDaRede.id, ambienteDaRede: noDaRede.ambienteDaRede, proximo: noDaRede.proximo, servidor: noDaRede.servidor, descricaoDaRede: noDaRede.descricaoDaRede}
+  else return {id: noDaRede.id, ambienteDaRede: noDaRede.ambienteDaRede, proximo: noDaRede.proximo.id, servidor: noDaRede.servidor, descricaoDaRede: noDaRede.descricaoDaRede}
 }
 
 export default {
-  carregarNosDaRede: function (pagina, usuariosDaRede, totalPaginas) {
+  carregarNosDaRede: function (pagina, nosDaRede, totalPaginas) {
     Vue.http.get(url + '?pagina=' + pagina).then(
       response => {
-        usuariosDaRede(response.body.data.content)
+        nosDaRede(response.body.data.content)
         totalPaginas(response.body.data.totalPages)
       },
       error => {
@@ -23,10 +23,10 @@ export default {
       }
     )
   },
-  carregarNosDaRedeTodos: function (usuariosDaRede) {
+  carregarNosDaRedeTodos: function (nosDaRede) {
     Vue.http.get(url + 'todos').then(
       response => {
-        usuariosDaRede(response.body.data)
+        nosDaRede(response.body.data)
       },
       error => {
         GeralService.mensagemErro(error)

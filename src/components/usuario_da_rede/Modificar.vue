@@ -6,7 +6,7 @@
       <formulario :usuarioDaRede="usuarioDaRede" :action="modificarUsuarioDaRede"></formulario>
     </div>
     <div v-else>
-      <h2>Nenhum servidor encontrado</h2>
+      <h2>Nenhum usuário da rede encontrado.</h2>
     </div>
   </aside>
 </template>
@@ -18,10 +18,7 @@ import UsuarioDaRedeFormulario from '@/components/usuario_da_rede/components/For
 export default {
   data: function () {
     return {
-      usuarioDaRede: {
-        servidor: {},
-        usuario: {}
-      },
+      usuarioDaRede: {},
       encontrado: false
     }
   },

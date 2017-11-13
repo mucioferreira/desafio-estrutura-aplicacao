@@ -1,8 +1,14 @@
 <template>
   <section>
     <div id="content-header">
-      <breadcrumbs/>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item" v-if="crumb.meta.breadcrumb" v-for="(crumb, i) in $breadcrumbs">
+          <span v-if="i >= ($breadcrumbs.length - 1)">{{ crumb.meta.breadcrumb }}</span>
+          <router-link v-else :to="{ path: crumb.path }">{{ crumb.meta.breadcrumb }}</router-link>
+        </li>
+      </ol>
     </div>
+
     <div class="quick-actions_homepage">
       <ul class="quick-actions">
         <li class="bg_lb"> 

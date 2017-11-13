@@ -5,23 +5,11 @@
         <div class="row-fluid">
           <div class="span6" >
             <procurar-servidor @selecionado="selecionarServidor" :selecionar="true"></procurar-servidor>
-            <tabela-servidor v-if="noDaRede.servidor.id" :servidor="noDaRede.servidor" :aberto="true" nome="servidorSelecionado"></tabela-servidor>
+            <tabela-servidor v-if="noDaRede.servidor.id" :servidor="noDaRede.servidor" :aberto="true"></tabela-servidor>
           </div>
           <div class="span6" >
             <procurar-no @selecionado="selecionarProximo" :selecionar="true"></procurar-no>
-            <div v-if="hasProximo" class="widget-box collapsible">
-              <div class="widget-title">
-                <a data-toggle="collapse" href="#collapseTwo"> 
-                  <span class="icon"><i class="fa fa-server"></i></span>
-                  <h5>Informação do Nó</h5>
-                </a> 
-              </div>
-              <div id="collapseTwo" class="collapse in">
-                <div class="widget-content">
-                  <tabela-no :noDaRede="noDaRede.proximo" :aberto="true"></tabela-no>
-                </div>
-              </div>
-            </div>
+            <tabela-no v-if="noDaRede.proximo" :noDaRede="noDaRede.proximo" :aberto="true"></tabela-no>
           </div>
         </div>
         <div class="control-group">
@@ -59,8 +47,7 @@ export default {
   props: ['noDaRede', 'action'],
   data: function () {
     return {
-      ambientes: null,
-      proximoSelecionado: null
+      ambientes: null
     }
   },
   methods: {

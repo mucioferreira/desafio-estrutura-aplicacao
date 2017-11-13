@@ -18,6 +18,16 @@ export default {
       }
     )
   },
+  carregarUsuariosDaRedeTodos: function (usuariosDaRede) {
+    Vue.http.get(url + 'todos').then(
+      response => {
+        usuariosDaRede(response.body.data)
+      },
+      error => {
+        GeralService.mensagemErro(error)
+      }
+    )
+  },
   post: function (usuarioDaRede) {
     Vue.http.post(url, JSON.stringify(usuarioDaRede)).then(
       response => {

@@ -8,7 +8,7 @@ Desenvolva um aplicativo que permita gerenciar determinada infraestrutura de red
 
 - [x] Manipular (incluir, alterar e excluir) os nós da rede de computadores.
 - [x] Manipular (incluir, alterar e excluir) os stakeholders da rede de computadores.
-- [ ] Representar visualmente os nós da rede e os stakeholders (utilize uma estrutura de dados adequada para essa representação).
+- [x] Representar visualmente os nós da rede e os stakeholders (utilize uma estrutura de dados adequada para essa representação).
 - [x] Buscar determinado nó na rede de computadores.
 
 **Observação:** o nó da rede possui um nome, um tipo (componente, servidor de aplicativos, servidor de banco de dados,

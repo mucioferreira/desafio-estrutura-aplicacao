@@ -1,123 +1,78 @@
 <template>
   <aside>
-    <div class="grafico">
+    <div id="grafico" class="grafico">
       <div class="legenda">
-        <ul> 
+        <ul>
           <li>
             <h4>Ambientes - <a v-on:click="selecionarAmbiente(null)"><small>Todos Ambientes</small></a></h4>
           </li>
-          <li>
-            <a v-on:click="selecionarAmbiente('DESENVOLVIMENTO')">
-              <span class="box-legenda box-DESENVOLVIMENTO"></span>
-              <span class="legenda-label">Desenvolvimento</span>
-            </a>
-          </li>
-          <li>
-            <a v-on:click="selecionarAmbiente('HOMOLOGACAO')">
-              <span class="box-legenda box-HOMOLOGACAO"></span>
-              <span class="legenda-label">Homologação</span>
-            </a>
-          </li>
-          <li>
-            <a v-on:click="selecionarAmbiente('LOCAL')">
-              <span class="box-legenda box-LOCAL"></span>
-              <span class="legenda-label">Local</span>
-            </a>
-          </li>
-          <li>
-            <a a v-on:click="selecionarAmbiente('PRODUCAO')">
-              <span class="box-legenda box-PRODUCAO"></span>
-              <span class="legenda-label">Produção</span>
-            </a>
-          </li>
-          <li>
-            <a v-on:click="selecionarAmbiente('PADRAO')">
-              <span class="box-legenda box-PADRAO"></span>
-              <span class="legenda-label">Nenhum</span>
+          <li v-for="(ambiente, nome) in ambientes">
+            <a v-on:click="selecionarAmbiente(ambiente)">
+              <span :class="['box-legenda', ambiente]"></span>
+              <span class="legenda-label">{{ nome }}</span>
             </a>
           </li>
         </ul>
+        <hr>
+        <p><span class="box-legenda USUARIO"></span> Usuário da rede</p>
+        <p>Qtd. de nós: {{ nosDaRede.length }}</p>
+        <p>Qtd. de usuários: {{ usuariosDaRede.length }}</p>
       </div>
 
-      <d3-network :net-nodes="nosDaRede" :net-links="links" :options="options" @node-click="nodeClick" @link-click="linkClick"></d3-network>
-      <p>Qtd. de nós: {{ nosDaRede.length }}</p>
+      <grafico :net-nodes="nodes" :net-links="links" :options="options" @node-click="nodeClick" @link-click="linkClick"></grafico>
 
-      <div v-if="informacaoSelecionado" :class="[{ open: informacaoSelecionado }, 'informacao']">
-        <div class="informacao-header">
-          <h4>Informações<a v-on:click="closeInformacao"><i class="fa fa-close"></i></a></h4>
-        </div>
-        <div class="informacao-body">
-          <tabela-servidor v-if="servidor.id" :servidor="servidor" :aberto="true" nome="servidorSelecionado"></tabela-servidor>
-
-          <div v-if="noDaRede.id" class="widget-box collapsible">
-            <div class="widget-title">
-              <a data-toggle="collapse" href="#collapseTwo"> 
-                <span class="icon"><i class="fa fa-server"></i></span>
-                <h5>Informação do Nó</h5>
-              </a> 
-            </div>
-            <div id="collapseTwo" class="collapse in">
-              <div class="widget-content">
-                <tabela-no :noDaRede="noDaRede" :aberto="true"></tabela-no>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="informacao" v-if="informacao" :style="{ position: 'absolute', left: informacoes.x, top: informacoes.y }">
+        <a class="close-button" v-on:click="fecharInformacao()"><i class="fa fa-close"></i></a>
+        <tabela-servidor v-if="informacoes.servidor" :servidor="informacoes.servidor" :aberto="informacoes.aberto" nome="servidorSelecionado"></tabela-servidor>
+        <tabela-no v-if="informacoes.noDaRede" :noDaRede="informacoes.noDaRede" :aberto="informacoes.aberto"></tabela-no>
+        <tabela-usuario v-if="informacoes.usuario" :usuario="informacoes.usuario" :aberto="informacoes.aberto"></tabela-usuario>
+        <tabela-usuario-da-rede v-if="informacoes.usuarioDaRede" :usuarioDaRede="informacoes.usuarioDaRede" :aberto="informacoes.aberto"></tabela-usuario-da-rede>
       </div>
-
+      
     </div>
   </aside>
 </template>
 
 <script>
 import D3Network from 'vue-d3-network'
-import TabelaDeInformacaoDoServidor from '@/components/servidor/components/TabelaDeInformacao'
-import TabelaDeInformacaoDoNo from '@/components/no_da_rede/components/TabelaDeInformacao'
-import ServidorService from '@/components/service/servidor'
 import NoDaRedeService from '@/components/service/noDaRede'
+import AmbienteDaRedeService from '@/components/service/ambiente'
+import UsuarioDaRedeService from '@/components/service/usuarioDaRede'
+import TabelaDeInformacaoServidor from '@/components/servidor/components/TabelaDeInformacao'
+import TabelaDeInformacaoNoDaRede from '@/components/no_da_rede/components/TabelaDeInformacao'
+import TabelaDeInformacaoDoUsuario from '@/components/usuario/components/TabelaDeInformacao'
+import TabelaDeInformacaoDoUsuarioDaRede from '@/components/usuario_da_rede/components/TabelaDeInformacao'
 
 export default {
   data: function () {
     return {
-      ambienteSelecionado: null,
-      todosNos: [],
       nosDaRede: [],
-      servidores: [],
-      informacaoSelecionado: false,
-      servidor: {},
-      noDaRede: {},
-      links: []
+      usuariosDaRede: [],
+      ambientes: {},
+      ambienteSelecionado: null,
+      informacoes: null
     }
   },
-  mounted: function () {
-    NoDaRedeService.carregarNosDaRedeTodos(todosNos => { this.todosNos = todosNos })
-  },
   methods: {
-    montarGrafico: function (noDaRede) {
-      this.nosDaRede.push({ id: noDaRede.id, name: noDaRede.servidor, servidor: noDaRede.servidor, _cssClass: noDaRede.ambienteDaRede })
-      if (noDaRede.proximo != null) this.links.push({ sid: noDaRede.id, tid: noDaRede.proximo })
-    },
     selecionarAmbiente: function (ambienteSelecionado) {
       this.ambienteSelecionado = ambienteSelecionado
     },
-    closeInformacao: function () {
-      this.informacaoSelecionado = false
-      this.servidor = {}
-      this.noDaRede = {}
+    fecharInformacao: function () {
+      this.informacoes = null
+    },
+    getUsuarioId: function (id) {
+      return 'user' + id
     }
   },
   watch: {
-    todosNos: function (todosNos) {
-      this.todosNos.forEach(noDaRede => this.montarGrafico(noDaRede))
-    },
     ambienteSelecionado: function (ambienteSelecionado) {
-      this.nosDaRede = []
-      this.links = []
-      if (ambienteSelecionado == null) this.todosNos.forEach(noDaRede => this.montarGrafico(noDaRede))
-      else this.todosNos.forEach(noDaRede => { if (noDaRede.ambienteDaRede === ambienteSelecionado) this.montarGrafico(noDaRede) })
+      console.log(ambienteSelecionado)
     }
   },
   computed: {
+    informacao: function () {
+      return this.informacoes
+    },
     options: function () {
       return {
         force: 3000,
@@ -126,25 +81,62 @@ export default {
         canvas: false
       }
     },
+    nodes: function () {
+      var t = this
+      var nodes = []
+      this.nosDaRede.forEach(function (noDaRede) {
+        var no = { id: noDaRede.id, name: noDaRede.servidor.nome, _cssClass: noDaRede.ambienteDaRede, no: noDaRede }
+        nodes.push(no)
+      })
+      this.usuariosDaRede.forEach(function (usuarioDaRede) {
+        var usuario = { id: t.getUsuarioId(usuarioDaRede.id), name: usuarioDaRede.usuario.nome, _cssClass: 'USUARIO', usuarioDaRede: usuarioDaRede }
+        nodes.push(usuario)
+      })
+      return nodes
+    },
+    links: function () {
+      var t = this
+      var links = []
+      this.nosDaRede.forEach(noDaRede => { if (noDaRede.proximo != null) links.push({ sid: noDaRede.id, tid: noDaRede.proximo, no: noDaRede }) })
+      this.usuariosDaRede.forEach(usuarioDaRede => { links.push({ sid: t.getUsuarioId(usuarioDaRede.id), tid: usuarioDaRede.noDaRede.id, usuarioDaRede: usuarioDaRede }) })
+      return links
+    },
     nodeClick: function () {
       var t = this
       return function (event, nodeObject) {
-        t.informacaoSelecionado = true
-        ServidorService.procurarServidor(nodeObject.servidor, servidor => { t.servidor = servidor })
+        t.informacoes = {
+          servidor: (typeof nodeObject.no === 'object') ? nodeObject.no.servidor : null,
+          usuario: (typeof nodeObject.usuarioDaRede === 'object') ? nodeObject.usuarioDaRede.usuario : null,
+          aberto: true,
+          x: event.layerX + 'px',
+          y: event.layerY + 'px'
+        }
       }
     },
     linkClick: function () {
       var t = this
       return function (event, linkObject) {
-        t.informacaoSelecionado = true
-        NoDaRedeService.procurarNoDaRede(linkObject.sid, noDaRede => { t.noDaRede = noDaRede })
+        t.informacoes = {
+          noDaRede: linkObject.no,
+          usuarioDaRede: linkObject.usuarioDaRede,
+          aberto: true,
+          x: event.layerX + 'px',
+          y: event.layerY + 'px'
+        }
       }
     }
   },
+  mounted: function () {
+    NoDaRedeService.carregarNosDaRedeTodos(nosDaRede => { this.nosDaRede = nosDaRede })
+    AmbienteDaRedeService.get(ambientes => { this.ambientes = ambientes })
+    UsuarioDaRedeService.carregarUsuariosDaRedeTodos(usuariosDaRede => { this.usuariosDaRede = usuariosDaRede })
+  },
   components: {
-    tabelaNo: TabelaDeInformacaoDoNo,
-    tabelaServidor: TabelaDeInformacaoDoServidor,
-    D3Network
+    grafico: D3Network,
+    tabelaServidor: TabelaDeInformacaoServidor,
+    tabelaNo: TabelaDeInformacaoNoDaRede,
+    tabelaUsuario: TabelaDeInformacaoDoUsuario,
+    tabelaUsuarioDaRede: TabelaDeInformacaoDoUsuarioDaRede
   }
 }
 </script>
@@ -153,6 +145,9 @@ export default {
 
 <style type="text/css">
 :root {
+  --USUARIO-stroke: #000000;
+  --USUARIO-fill: #4a4a4a;
+
   --DESENVOLVIMENTO-stroke: #6c1a6d;
   --DESENVOLVIMENTO-fill: #c840ca;
 
@@ -169,6 +164,11 @@ export default {
   --PADRAO-fill: #ffb848;
 }
 
+.close-button {
+  position: absolute;
+  right: 0;
+}
+
 .legenda-label {
   display: inline-block;
   line-height: 20px;
@@ -176,19 +176,12 @@ export default {
   top: -5px;
 }
 
-.informacao {
-  position: absolute;
-  right: -15px;
-  top: 30px;
-  width: 35%;
+.openInformacao {
+  -webkit-animation: openInformacao .8s forwards; /* Safari 4.0 - 8.0 */
+  animation: openInformacao .8s forwards;
 }
 
-.open {
-  -webkit-animation: open .8s forwards; /* Safari 4.0 - 8.0 */
-  animation: open .8s forwards;
-}
-
-@keyframes open {
+@keyframes openInformacao {
     0%   {right: -300px;}
     100% {right: -15px;}
 }
@@ -196,6 +189,12 @@ export default {
 .informacao > .informacao-header {
   position: relative;
   border-bottom: 1px solid #cdcdcd;
+  padding: 10px;
+  background-color: #eeeeee;
+}
+
+.informacao > .informacao-header > h4 {
+  margin: 0
 }
 
 .informacao-body {
@@ -231,29 +230,39 @@ export default {
   border-style: solid;
 }
 
-.box-legenda.box-PADRAO {
+.box-legenda.NENHUM {
   background-color: var(--PADRAO-fill);
   border-color: var(--PADRAO-stroke);
 }
 
-.box-legenda.box-DESENVOLVIMENTO {
+.box-legenda.USUARIO {
+  background-color: var(--USUARIO-fill);
+  border-color: var(--USUARIO-stroke);
+}
+
+.box-legenda.DESENVOLVIMENTO {
   background-color: var(--DESENVOLVIMENTO-fill);
   border-color: var(--DESENVOLVIMENTO-stroke);
 }
 
-.box-legenda.box-HOMOLOGACAO {
+.box-legenda.HOMOLOGACAO {
   background-color: var(--HOMOLOGACAO-fill);
   border-color: var(--HOMOLOGACAO-stroke);
 }
 
-.box-legenda.box-LOCAL {
+.box-legenda.LOCAL {
   background-color: var(--LOCAL-fill);
   border-color: var(--LOCAL-stroke);
 }
 
-.box-legenda.box-PRODUCAO {
+.box-legenda.PRODUCAO {
   background-color: var(--PRODUCAO-fill);
   border-color: var(--PRODUCAO-stroke);
+}
+
+.USUARIO {
+  stroke: var(--USUARIO-stroke) !important;
+  fill: var(--USUARIO-fill) !important;
 }
 
 .DESENVOLVIMENTO {

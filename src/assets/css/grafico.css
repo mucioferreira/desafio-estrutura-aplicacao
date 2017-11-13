@@ -1,0 +1,144 @@
+:root {
+  --DESENVOLVIMENTO-stroke: #6c1a6d;
+  --DESENVOLVIMENTO-fill: #c840ca;
+
+  --HOMOLOGACAO-stroke: #156643;
+  --HOMOLOGACAO-fill: #28b779;
+
+  --LOCAL-stroke: #842e16;
+  --LOCAL-fill: #da542e;
+
+  --PRODUCAO-stroke: #14536f;
+  --PRODUCAO-fill: #27a9e3;
+
+  --PADRAO-stroke: #b37b22;
+  --PADRAO-fill: #ffb848;
+}
+
+.legenda-label {
+  display: inline-block;
+  line-height: 20px;
+  position: relative;
+  top: -5px;
+}
+
+.informacao {
+  position: absolute;
+  right: -15px;
+  top: 30px;
+  width: 35%;
+}
+
+.open {
+  -webkit-animation: open .8s forwards; /* Safari 4.0 - 8.0 */
+  animation: open .8s forwards;
+}
+
+@keyframes open {
+    0%   {right: -300px;}
+    100% {right: -15px;}
+}
+
+.informacao > .informacao-header {
+  position: relative;
+  border-bottom: 1px solid #cdcdcd;
+}
+
+.informacao-body {
+  padding: 0 15px
+}
+
+.informacao > .informacao-header > h4 > a {
+  position: absolute;
+  right: 10px;
+}
+
+.grafico {
+  position: relative;
+  margin-top: 80px;
+}
+
+.legenda {
+  position: absolute;
+  top: 30px;
+}
+
+.legenda > ul {
+  list-style: none;
+  padding: 0;
+}
+
+.box-legenda {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.box-legenda.box-PADRAO {
+  background-color: var(--PADRAO-fill);
+  border-color: var(--PADRAO-stroke);
+}
+
+.box-legenda.box-DESENVOLVIMENTO {
+  background-color: var(--DESENVOLVIMENTO-fill);
+  border-color: var(--DESENVOLVIMENTO-stroke);
+}
+
+.box-legenda.box-HOMOLOGACAO {
+  background-color: var(--HOMOLOGACAO-fill);
+  border-color: var(--HOMOLOGACAO-stroke);
+}
+
+.box-legenda.box-LOCAL {
+  background-color: var(--LOCAL-fill);
+  border-color: var(--LOCAL-stroke);
+}
+
+.box-legenda.box-PRODUCAO {
+  background-color: var(--PRODUCAO-fill);
+  border-color: var(--PRODUCAO-stroke);
+}
+
+.DESENVOLVIMENTO {
+  stroke: var(--DESENVOLVIMENTO-stroke) !important;
+  fill: var(--DESENVOLVIMENTO-fill) !important;
+}
+
+.HOMOLOGACAO {
+  stroke: var(--HOMOLOGACAO-stroke) !important;
+  fill: var(--HOMOLOGACAO-fill) !important;
+}
+
+.LOCAL {
+  stroke: var(--LOCAL-stroke) !important;
+  fill: var(--LOCAL-fill) !important;
+}
+
+.PRODUCAO {
+  stroke: var(--PRODUCAO-stroke) !important;
+  fill: var(--PRODUCAO-fill) !important;
+}
+
+.node {
+  stroke: var(--PADRAO-stroke) ;
+  fill: var(--PADRAO-fill);
+  stroke-width: 2px !important; 
+}
+
+.link:hover, .node:hover {
+  r: 10;
+}
+
+@media (max-width: 767px) {
+  .informacao {
+    position: static;
+    width: 100%;
+  }
+  
+  .legenda {
+    position: static;
+  }
+}

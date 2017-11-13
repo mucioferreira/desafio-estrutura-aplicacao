@@ -11,6 +11,7 @@ import router from './router'
 import VueNotifications from 'vue-notifications'
 import miniToastr from 'mini-toastr'// https://github.com/se-panfilov/mini-toastr
 
+Vue.config.debug = true
 Vue.config.productionTip = false
 VueNotifications.config.timeout = 3000
 

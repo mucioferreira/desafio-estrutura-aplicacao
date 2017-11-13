@@ -4,11 +4,11 @@
       <form v-on:submit="actionMethod(usuarioDaRede)" class="form-horizontal" name="basic_validate" id="basic_validate" novalidate="novalidate">
         
         <div class="row-fluid">
-          <div class="span6" >
-            <procurar-servidor @selecionado="selecionarServidor" :selecionar="true"></procurar-servidor>
-            <tabela-servidor v-if="usuarioDaRede.servidor.id" :servidor="usuarioDaRede.servidor" :aberto="true"></tabela-servidor>
+          <div class="span6">
+            <procurar-no @selecionado="selecionarNoDaRede" :selecionar="true" :nenhum="true"></procurar-no>
+            <tabela-no v-if="usuarioDaRede.noDaRede" :noDaRede="usuarioDaRede.noDaRede" :aberto="true"></tabela-no>
           </div>
-          <div class="span6" >
+          <div class="span6">
             <procurar-usuario @selecionado="selecionarUsuario" :selecionar="true"></procurar-usuario>
             <tabela-usuario v-if="usuarioDaRede.usuario.id" :usuario="usuarioDaRede.usuario" :aberto="true"></tabela-usuario>
           </div>
@@ -29,16 +29,16 @@
 </template>
 
 <script>
-import ProcurarServidorComponente from '@/components/servidor/components/Procurar'
+import ProcurarNoDaRedeComponente from '@/components/no_da_rede/components/Procurar'
 import ProcurarUsuarioComponente from '@/components/usuario/components/Procurar'
 import TabelaDeInformacaoDoUsuario from '@/components/usuario/components/TabelaDeInformacao'
-import TabelaDeInformacaoDoServidor from '@/components/servidor/components/TabelaDeInformacao'
+import TabelaDeInformacaoDoNo from '@/components/no_da_rede/components/TabelaDeInformacao'
 
 export default {
   props: ['usuarioDaRede', 'action'],
   methods: {
-    selecionarServidor: function (servidor) {
-      this.usuarioDaRede.servidor = servidor
+    selecionarNoDaRede: function (noDaRede) {
+      this.usuarioDaRede.noDaRede = noDaRede
     },
     selecionarUsuario: function (usuario) {
       this.usuarioDaRede.usuario = usuario
@@ -48,11 +48,16 @@ export default {
       event.preventDefault()
     }
   },
+  computed: {
+    hasProximo: function () {
+      return (typeof this.usuarioDaRede.noDaRede === 'object') && (this.usuarioDaRede.noDaRede != null)
+    }
+  },
   components: {
-    procurarServidor: ProcurarServidorComponente,
+    procurarNo: ProcurarNoDaRedeComponente,
     procurarUsuario: ProcurarUsuarioComponente,
     tabelaUsuario: TabelaDeInformacaoDoUsuario,
-    tabelaServidor: TabelaDeInformacaoDoServidor
+    tabelaNo: TabelaDeInformacaoDoNo
   }
 }
 </script>
